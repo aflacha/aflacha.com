@@ -129,7 +129,7 @@ def parse_yaml(text):
 
 
 def _consume_value(lines, start_idx, indent, initial):
-    """Read a value, handling quoted strings and multi-line continuations."""
+    """Read a value, handling quoted strings, YAML block scalars, and multi-line continuations."""
     value = initial
 
     # Remove surrounding quotes
@@ -138,8 +138,12 @@ def _consume_value(lines, start_idx, indent, initial):
     elif len(value) >= 2 and value[0] == "'" and value[-1] == "'":
         value = value[1:-1]
 
-    # Check if the value continues on the next line
-    # (only if the initial value ends with something suggesting continuation)
+    # Handle YAML block scalar indicators (| and >)
+    # When value is just '|' or '>', the actual content starts on the next line(s)
+    is_block_scalar = value in ('|', '>', '|-', '>-', '|+', '>+')
+    if is_block_scalar:
+        value = ''
+
     idx = start_idx + 1
     while idx < len(lines):
         line = lines[idx]
@@ -159,7 +163,17 @@ def _consume_value(lines, start_idx, indent, initial):
             continue
 
         # It's a continuation line
-        value += ' ' + stripped.strip()
+        # Use newline for block scalars, space for inline continuations
+        if is_block_scalar:
+            if value:
+                value += '\n' + stripped.strip()
+            else:
+                value = stripped.strip()
+        else:
+            if value:
+                value += ' ' + stripped.strip()
+            else:
+                value = stripped.strip()
         idx += 1
 
     return value, idx - 1
