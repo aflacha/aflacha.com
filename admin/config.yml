@@ -2,12 +2,10 @@ backend:
   name: github
   repo: aflacha/aflacha.com
   branch: main
-  auth_type: pkce
+  auth_type: pkce  # Uses PKCE flow — no OAuth server or Netlify Identity needed
 
 media_folder: "images"
 public_folder: "/images"
-
-publish_mode: editorial_workflow
 
 collections:
   - name: "site"
