@@ -10,13 +10,14 @@ on:
       - 'template.html'
       - 'build.py'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run build script
         run: python3 build.py
