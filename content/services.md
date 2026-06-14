@@ -1,3 +1,4 @@
+---
 services:
   - icon: "🎲"
     title: "Game Design"
@@ -11,3 +12,4 @@ services:
   - icon: "📋"
     title: "Project Management"
     description: "Agile/Scrum, roadmaps, risk management, and keeping cross-disciplinary teams aligned and moving in the same direction."
+---

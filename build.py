@@ -185,11 +185,19 @@ CONTENT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'content'
 
 
 def read_content(filename):
-    """Read a content markdown file and parse it as YAML."""
+    """Read a content markdown file and parse it as YAML.
+    Strips optional YAML frontmatter (--- ... ---) if present."""
     path = os.path.join(CONTENT_DIR, filename)
     with open(path, 'r', encoding='utf-8') as f:
         text = f.read()
-    return parse_yaml(text)
+    
+    # Strip YAML frontmatter (--- ... ---)
+    if text.startswith('---'):
+        end = text.find('---', 3)
+        if end != -1:
+            text = text[3:end]  # Keep content BETWEEN the markers
+    
+    return parse_yaml(text.strip())
 
 
 # ── HTML Generation ───────────────────────────────────────────────

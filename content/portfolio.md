@@ -1,3 +1,4 @@
+---
 projects:
   - icon: "🎮"
     title: "Artelysium Studio Title"
@@ -11,3 +12,4 @@ projects:
     title: "Community Platform"
     tag: "Production"
     description: "Produced Kolektif untuk Gamedev Indonesia — a growing community platform for Indonesian game developers."
+---
