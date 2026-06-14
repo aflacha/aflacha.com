@@ -1,9 +1,6 @@
 backend:
-  name: github
-  repo: aflacha/aflacha.com
+  name: git-gateway
   branch: main
-  auth_type: pkce
-  app_id: Ov23lik0pcjtFTtHZbA0
 
 media_folder: "images"
 public_folder: "/images"
