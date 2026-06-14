@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: aflacha/aflacha.com
   branch: main
+  auth_type: pkce
+  app_id: Ov23lik0pcjtFTtHZbA0
 
 media_folder: "images"
 public_folder: "/images"
@@ -9,6 +12,16 @@ collections:
   - name: "site"
     label: "Site Content"
     files:
+      - name: "settings"
+        label: "Site Settings"
+        file: "content/settings.md"
+        fields:
+          - label: "Under Construction Mode"
+            name: "under_construction"
+            widget: "boolean"
+            default: false
+            hint: "Toggle ON to show Coming Soon page. Toggle OFF to show full portfolio."
+
       - name: "about"
         label: "About Section"
         file: "content/about.md"

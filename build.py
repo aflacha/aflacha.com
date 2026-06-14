@@ -307,8 +307,10 @@ def generate_contact_email_html(email):
 
 # ── Main Build Logic ──────────────────────────────────────────────
 
-TEMPLATE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'template.html')
-OUTPUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'index.html')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'template.html')
+CONSTRUCTION_TEMPLATE_PATH = os.path.join(BASE_DIR, 'template-construction.html')
+OUTPUT_PATH = os.path.join(BASE_DIR, 'index.html')
 
 
 def replace_marker(text, marker_name, replacement):
@@ -343,49 +345,65 @@ def replace_marker(text, marker_name, replacement):
 def build():
     print("Building aflacha.com...")
 
-    # 1. Parse content files
-    print("  Reading content files...")
-    about = read_content('about.md')
-    services_data = read_content('services.md')
-    portfolio_data = read_content('portfolio.md')
-    contact = read_content('contact.md')
+    # Check under_construction toggle
+    print("  Checking settings...")
+    settings = read_content('settings.md')
+    under_construction = settings.get('under_construction', False)
+    # Handle both boolean and string values (YAML stores as true/false)
+    if isinstance(under_construction, str):
+        under_construction = under_construction.lower() in ('true', 'yes', '1')
+    
+    if under_construction:
+        print("    → Under Construction mode ON")
+        # Just copy the construction template
+        print("  Reading construction template...")
+        with open(CONSTRUCTION_TEMPLATE_PATH, 'r', encoding='utf-8') as f:
+            html = f.read()
+    else:
+        print("    → Full portfolio mode")
+        # 1. Parse content files
+        print("  Reading content files...")
+        about = read_content('about.md')
+        services_data = read_content('services.md')
+        portfolio_data = read_content('portfolio.md')
+        contact = read_content('contact.md')
 
-    print(f"    About: {len(about)} fields")
-    print(f"    Services: {len(services_data.get('services', []))} items")
-    print(f"    Portfolio: {len(portfolio_data.get('projects', []))} items")
-    print(f"    Contact: {len(contact)} fields")
+        print(f"    About: {len(about)} fields")
+        print(f"    Services: {len(services_data.get('services', []))} items")
+        print(f"    Portfolio: {len(portfolio_data.get('projects', []))} items")
+        print(f"    Contact: {len(contact)} fields")
 
-    # 2. Read template
-    print("  Reading template...")
-    with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
-        html = f.read()
+        # 2. Read template
+        print("  Reading template...")
+        with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
+            html = f.read()
 
-    # 3. Generate replacements
-    print("  Generating HTML sections...")
+        # 3. Generate replacements
+        print("  Generating HTML sections...")
 
-    tagline_html = generate_tagline_html(about.get('tagline', ''))
-    html = replace_marker(html, 'TAGLINE', tagline_html)
-    print("    ✓ Tagline")
+        tagline_html = generate_tagline_html(about.get('tagline', ''))
+        html = replace_marker(html, 'TAGLINE', tagline_html)
+        print("    ✓ Tagline")
 
-    about_html = generate_about_html(about)
-    html = replace_marker(html, 'ABOUT_TEXT', about_html)
-    print("    ✓ About text")
+        about_html = generate_about_html(about)
+        html = replace_marker(html, 'ABOUT_TEXT', about_html)
+        print("    ✓ About text")
 
-    services_html = generate_services_html(services_data)
-    html = replace_marker(html, 'SERVICES_CARDS', services_html)
-    print("    ✓ Services cards")
+        services_html = generate_services_html(services_data)
+        html = replace_marker(html, 'SERVICES_CARDS', services_html)
+        print("    ✓ Services cards")
 
-    portfolio_html = generate_portfolio_html(portfolio_data)
-    html = replace_marker(html, 'PORTFOLIO_CARDS', portfolio_html)
-    print("    ✓ Portfolio cards")
+        portfolio_html = generate_portfolio_html(portfolio_data)
+        html = replace_marker(html, 'PORTFOLIO_CARDS', portfolio_html)
+        print("    ✓ Portfolio cards")
 
-    contact_intro_html = generate_contact_intro_html(contact.get('intro', ''))
-    html = replace_marker(html, 'CONTACT_INTRO', contact_intro_html)
-    print("    ✓ Contact intro")
+        contact_intro_html = generate_contact_intro_html(contact.get('intro', ''))
+        html = replace_marker(html, 'CONTACT_INTRO', contact_intro_html)
+        print("    ✓ Contact intro")
 
-    contact_email_html = generate_contact_email_html(contact.get('email', ''))
-    html = replace_marker(html, 'CONTACT_EMAIL', contact_email_html)
-    print("    ✓ Contact email")
+        contact_email_html = generate_contact_email_html(contact.get('email', ''))
+        html = replace_marker(html, 'CONTACT_EMAIL', contact_email_html)
+        print("    ✓ Contact email")
 
     # 4. Write output
     print("  Writing index.html...")
