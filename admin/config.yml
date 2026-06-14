@@ -1,0 +1,58 @@
+# Decap CMS Configuration
+# Access at: https://aflacha.com/admin/
+
+backend:
+  name: github
+  repo: aflacha/aflacha.com
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "site"
+    label: "Site Content"
+    files:
+      - name: "about"
+        label: "About Section"
+        file: "content/about.md"
+        fields:
+          - { label: "Bio Paragraph 1", name: "bio1", widget: "text", default: "Started as a web front-end developer in 2013..." }
+          - { label: "Bio Paragraph 2", name: "bio2", widget: "text", default: "" }
+          - { label: "Bio Paragraph 3", name: "bio3", widget: "text", default: "" }
+          - { label: "Tagline", name: "tagline", widget: "string", default: "COO & Co-founder at Artelysium Studios" }
+
+      - name: "services"
+        label: "Services (What I Do)"
+        file: "content/services.md"
+        fields:
+          - label: "Services List"
+            name: "services"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+      - name: "portfolio"
+        label: "Portfolio Projects"
+        file: "content/portfolio.md"
+        fields:
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Category Tag", name: "tag", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Image (optional)", name: "image", widget: "image", required: false }
+
+      - name: "contact"
+        label: "Contact Info"
+        file: "content/contact.md"
+        fields:
+          - { label: "Intro Text", name: "intro", widget: "text", default: "Whether you have a project in mind..." }
+          - { label: "Email", name: "email", widget: "string", default: "aflacha@artelysium.com" }
