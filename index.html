@@ -835,5 +835,21 @@
       successMsg.style.display = 'block';
     });
   </script>
+  <!-- Netlify Identity (for CMS invite acceptance) -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function(user) {
+        if (!user && window.location.hash.includes('invite_token')) {
+          window.netlifyIdentity.on('login', function() {
+            window.location.href = '/admin/';
+          });
+        }
+        if (user) {
+          window.location.href = '/admin/';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
