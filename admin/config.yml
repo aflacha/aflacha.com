@@ -2,8 +2,7 @@ backend:
   name: github
   repo: aflacha/aflacha.com
   branch: main
-  base_url: https://api.decapcms.org
-  auth_endpoint: /auth
+  auth_endpoint: https://decap-proxy.aflacha-rach.workers.dev/auth
 
 media_folder: "images"
 public_folder: "/images"
