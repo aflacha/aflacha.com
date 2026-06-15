@@ -1,7 +1,7 @@
 ---
 title: Aflacha Rachmata
-meta_description: Personal brand &amp; portfolio of Aflacha Imadida Rachmata —
-  COO, Game Designer, UX/UI Designer, Producer.
+meta_description: Personal brand &amp; portfolio of Aflacha Rachmata — COO, Game
+  Designer, UX/UI Designer, Producer.
 nav_logo: V
 nav_links:
   - label: About
