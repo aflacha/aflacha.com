@@ -15,7 +15,7 @@ nav_links:
   - label: Contact
     href: "#contact"
 hero_badge: Available for projects
-hero_name: <span class="highlight">Aflacha Imadida</span> Rachmata
+hero_name: <span class="highlight">Aflacha Rachmata</span>
 hero_tagline: COO &amp; Co-founder at <strong>Artelysium Studios</strong>
   &mdash; building games, experiences, and teams that ship.
 hero_tags:
@@ -57,7 +57,7 @@ social_github_text: github.com/aflacha
 footer_text: Built with patience and gold
 footer_year: "2026"
 construction_title: Aflacha Rachmata — Coming Soon
-construction_meta_description: Personal brand &amp; portfolio of Aflacha Imadida
+construction_meta_description: Personal brand &amp; portfolio of Aflacha
   Rachmata — COO, game designer, creator. Coming soon.
 construction_badge: Under Construction
 construction_heading: Aflacha Rachmata
