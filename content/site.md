@@ -54,6 +54,7 @@ social_linkedin_url: https://linkedin.com/in/aflacha
 social_linkedin_text: linkedin.com/in/aflacha
 social_github_url: https://github.com/aflacha
 social_github_text: github.com/aflacha
+footer_name: "Aflacha Imadida Rachmata"
 footer_text: Built with patience and gold
 footer_year: "2026"
 construction_title: Aflacha Rachmata — Coming Soon

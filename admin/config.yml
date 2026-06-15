@@ -83,6 +83,7 @@ collections:
           - { label: "GitHub Display Text", name: "social_github_text", widget: "string" }
 
           # Footer
+          - { label: "Footer Name", name: "footer_name", widget: "string" }
           - { label: "Footer Text", name: "footer_text", widget: "string" }
           - { label: "Footer Year", name: "footer_year", widget: "string" }
 

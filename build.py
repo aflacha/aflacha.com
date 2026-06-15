@@ -627,6 +627,7 @@ def build():
 
         # Footer (inline)
         html = replace_marker(html, 'FOOTER_YEAR', site.get('footer_year', '2026'))
+        html = replace_marker(html, 'FOOTER_NAME', site.get('footer_name', 'Aflacha Imadida Rachmata'))
         html = replace_marker(html, 'FOOTER_TEXT', site.get('footer_text', 'Built with patience and gold'))
         print("    ✓ Footer")
 
