@@ -30,6 +30,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to index.html"
           else
-            git commit -m "Auto-build: regenerate index.html from content [skip ci]"
+            git commit -m "Auto-build: regenerate index.html from content"
             git push
           fi
