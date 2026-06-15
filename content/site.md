@@ -1,4 +1,5 @@
 ---
+favicon: "/images/favicon.svg"
 title: Aflacha Rachmata
 meta_description: Personal brand &amp; portfolio of Aflacha Rachmata — COO, Game
   Designer, UX/UI Designer, Producer.
@@ -29,9 +30,9 @@ hero_tags:
     accent: false
   - label: Product Lead
     accent: false
-cta_primary_text: See My Work
+cta_primary_text: "See My Work"
 cta_primary_href: "#portfolio"
-cta_secondary_text: Get in Touch
+cta_secondary_text: "Get in Touch"
 cta_secondary_href: "#contact"
 hero_extra_bio: Outside the studio? I write on <a
   href="https://medium.com/@aflacha" target="_blank">Medium</a>, tinker with
@@ -54,7 +55,7 @@ social_linkedin_url: https://linkedin.com/in/aflacha
 social_linkedin_text: linkedin.com/in/aflacha
 social_github_url: https://github.com/aflacha
 social_github_text: github.com/aflacha
-footer_name: Aflacha Rachmata
+footer_name: "Aflacha Rachmata"
 footer_text: Built with patience and gold
 footer_year: "2026"
 construction_title: Aflacha Rachmata — Coming Soon
@@ -63,7 +64,7 @@ construction_meta_description: Personal brand &amp; portfolio of Aflacha
 construction_badge: Under Construction
 construction_heading: Aflacha Rachmata
 construction_description: COO &amp; Co-founder of Artelysium Studios · Game
-  Designer · UX/UI Designer · Producer<br>The full site is being assembled.
-  Check back soon.
+  Designer · UX/UI Designer · Producer<br>The full portfolio is being
+  assembled. Check back soon.
 construction_footer: © 2026 · aflacha.com
 ---

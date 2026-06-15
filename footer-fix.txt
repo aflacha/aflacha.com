@@ -1,0 +1,25 @@
+cta_secondary_text: Get in Touch
+cta_secondary_href: "#contact"
+hero_extra_bio: Outside the studio? I write on <a
+  href="https://medium.com/@aflacha" target="_blank">Medium</a>, tinker with
+  side projects, and think deeply about game mechanics, product strategy, and
+  what makes a team click.
+about_label: About
+about_title: More than a decade shaping digital experiences.
+services_label: What I Do
+services_title: Building games, products, and teams that deliver.
+portfolio_label: My Works
+portfolio_title: Selected work &amp; projects.
+writing_label: Writing
+writing_title: Thoughts on games, design, and the industry.
+contact_label: Contact
+contact_title: Let's work together.
+writing_card_date: Latest
+writing_card_title: Read my articles on Medium
+writing_card_url: https://medium.com/@aflacha
+social_linkedin_url: https://linkedin.com/in/aflacha
+social_linkedin_text: linkedin.com/in/aflacha
+social_github_url: https://github.com/aflacha
+social_github_text: github.com/aflacha
+footer_name: "Aflacha Imadida Rachmata"
+footer_text: Built with patience and gold

@@ -538,6 +538,7 @@ def build():
             html = f.read()
 
         # Apply site content to construction template
+        html = replace_marker(html, 'FAVICON', site.get('favicon', '/images/favicon.svg'))
         html = replace_marker(html, 'CONSTRUCTION_TITLE', generate_construction_title(site))
         html = replace_marker(html, 'CONSTRUCTION_META_DESC', generate_construction_meta_desc(site))
         html = replace_marker(html, 'CONSTRUCTION_BADGE', generate_construction_badge(site))
@@ -570,6 +571,7 @@ def build():
         print("  Generating HTML sections...")
 
         # Site-level content (inline markers)
+        html = replace_marker(html, 'FAVICON', site.get('favicon', '/images/favicon.svg'))
         html = replace_marker(html, 'SITE_TITLE', site.get('title', 'Aflacha Imadida Rachmata'))
         html = replace_marker(html, 'SITE_META_DESC', site.get('meta_description', ''))
         html = replace_marker(html, 'NAV_LOGO', site.get('nav_logo', 'A'))
