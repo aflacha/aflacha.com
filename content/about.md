@@ -13,4 +13,17 @@ bio3: >
   to the local dev ecosystem.
 tagline: COO & Co-founder at Artelysium Studios — building games, experiences,
   and teams that ship.
+stats:
+  - icon: "🎮"
+    number: "10+"
+    label: "Years in games &amp; tech"
+  - icon: "🏢"
+    number: "Artelysium"
+    label: "Co-founder &amp; COO"
+  - icon: "👥"
+    number: "Kolektif"
+    label: "Game dev community founder"
+  - icon: "🏆"
+    number: "2017"
+    label: "Dicoding Community Driver Award"
 ---

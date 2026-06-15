@@ -29,6 +29,13 @@ collections:
           - { label: "Bio Paragraph 2", name: "bio2", widget: "text" }
           - { label: "Bio Paragraph 3", name: "bio3", widget: "text" }
           - { label: "Tagline", name: "tagline", widget: "string" }
+          - label: "Highlight Stats"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Icon", name: "icon", widget: "string" }
+              - { label: "Number/Text", name: "number", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
 
       - name: "services"
         label: "Services"

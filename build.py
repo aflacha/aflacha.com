@@ -260,6 +260,31 @@ def generate_services_html(services_data):
     return grid
 
 
+def generate_stats_html(about):
+    """Generate highlight stats cards HTML."""
+    items = about.get('stats', [])
+    if not items:
+        return ''
+    cards = []
+    for item in items:
+        icon = item.get('icon', '')
+        number = item.get('number', '')
+        label = item.get('label', '')
+        card = (
+            '          <div class="stat-card">\n'
+            f'            <div class="icon">{icon}</div>\n'
+            f'            <div class="number">{number}</div>\n'
+            f'            <div class="label">{label}</div>\n'
+            '          </div>'
+        )
+        cards.append(card)
+
+    grid = '        <div class="about-stats">\n'
+    grid += '\n'.join(cards)
+    grid += '\n        </div>'
+    return grid
+
+
 def generate_portfolio_html(portfolio_data):
     """Generate the full portfolio grid HTML including wrapper."""
     items = portfolio_data.get('projects', [])
@@ -388,6 +413,10 @@ def build():
         about_html = generate_about_html(about)
         html = replace_marker(html, 'ABOUT_TEXT', about_html)
         print("    ✓ About text")
+
+        stats_html = generate_stats_html(about)
+        html = replace_marker(html, 'ABOUT_STATS', stats_html)
+        print("    ✓ About stats")
 
         services_html = generate_services_html(services_data)
         html = replace_marker(html, 'SERVICES_CARDS', services_html)
