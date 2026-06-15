@@ -2,7 +2,7 @@ backend:
   name: github
   repo: aflacha/aflacha.com
   branch: main
-  auth_endpoint: https://decap-proxy.aflacha-rach.workers.dev/auth
+  base_url: https://decap-proxy.aflacha-rach.workers.dev
 
 media_folder: "images"
 public_folder: "/images"
