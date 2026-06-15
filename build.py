@@ -575,6 +575,7 @@ def build():
         html = replace_marker(html, 'SITE_TITLE', site.get('title', 'Aflacha Imadida Rachmata'))
         html = replace_marker(html, 'SITE_META_DESC', site.get('meta_description', ''))
         html = replace_marker(html, 'NAV_LOGO', site.get('nav_logo', 'A'))
+        html = replace_marker(html, 'HERO_LOGO', site.get('nav_logo', 'A'))
         html = replace_marker(html, 'HERO_BADGE', generate_hero_badge_html(site))
         html = replace_marker(html, 'HERO_NAME', generate_hero_name_html(site))
 
