@@ -15,7 +15,7 @@ nav_links:
   - label: Contact
     href: "#contact"
 hero_badge: Available for projects
-hero_name: <span class="highlight">Aflacha Rachmata</span>
+hero_name: <span class="highlight">Aflacha</span>Rachmata
 hero_tagline: COO &amp; Co-founder at <strong>Artelysium Studios</strong>
   &mdash; building games, experiences, and teams that ship.
 hero_tags:
