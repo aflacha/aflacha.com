@@ -12,17 +12,17 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0a0a0f;
-      --bg-secondary: #0f0f17;
-      --bg-card: #12121a;
-      --border: #1e1e2a;
-      --text: #e4e4ed;
-      --text-muted: #8888a0;
-      --accent: #7c5cfc;
-      --accent-hover: #9b80ff;
-      --accent-glow: rgba(124, 92, 252, 0.15);
-      --accent-subtle: rgba(124, 92, 252, 0.06);
-      --gradient: linear-gradient(135deg, #7c5cfc, #b45cfc);
+      --bg: #0c0c0c;
+      --bg-secondary: #0f0e0d;
+      --bg-card: #141312;
+      --border: #2a1f18;
+      --text: #e8dcc8;
+      --text-muted: #b8ad9e;
+      --accent: #c4953a;
+      --accent-hover: #d4a84a;
+      --accent-glow: rgba(196, 149, 58, 0.15);
+      --accent-subtle: rgba(196, 149, 58, 0.06);
+      --gradient: linear-gradient(135deg, #c4953a, #d4a84a);
       --max-width: 1100px;
     }
 
@@ -40,10 +40,10 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(10, 10, 15, 0.85);
+      background: rgba(12, 12, 12, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #1e1814;
     }
 
     .nav-inner {
@@ -140,8 +140,8 @@
       text-align: center;
       padding: 4rem 1.5rem;
       background-image:
-        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(124, 92, 252, 0.06), transparent),
-        radial-gradient(ellipse 60% 40% at 80% 90%, rgba(124, 92, 252, 0.04), transparent);
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(196, 149, 58, 0.06), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 90%, rgba(196, 149, 58, 0.04), transparent);
     }
 
     .hero-content { max-width: 720px; }
@@ -152,8 +152,8 @@
       gap: 0.5rem;
       padding: 0.35rem 1rem;
       border-radius: 100px;
-      background: rgba(124, 92, 252, 0.08);
-      border: 1px solid rgba(124, 92, 252, 0.2);
+      background: rgba(196, 149, 58, 0.08);
+      border: 1px solid rgba(196, 149, 58, 0.2);
       font-size: 0.8rem;
       font-weight: 500;
       color: var(--accent);
@@ -207,8 +207,8 @@
     }
 
     .hero-tag.accent {
-      background: rgba(124, 92, 252, 0.08);
-      border-color: rgba(124, 92, 252, 0.2);
+      background: rgba(196, 149, 58, 0.08);
+      border-color: rgba(196, 149, 58, 0.2);
       color: var(--accent);
     }
 
@@ -301,7 +301,7 @@
       transition: border-color 0.2s, transform 0.2s;
     }
 
-    .service-card:hover { border-color: rgba(124, 92, 252, 0.3); transform: translateY(-2px); }
+    .service-card:hover { border-color: rgba(196, 149, 58, 0.3); transform: translateY(-2px); }
 
     .service-card .icon { font-size: 2rem; margin-bottom: 1rem; }
     .service-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
@@ -324,12 +324,12 @@
       transition: border-color 0.2s, transform 0.2s;
     }
 
-    .portfolio-card:hover { border-color: rgba(124, 92, 252, 0.3); transform: translateY(-2px); }
+    .portfolio-card:hover { border-color: rgba(196, 149, 58, 0.3); transform: translateY(-2px); }
 
     .portfolio-thumb {
       width: 100%;
       aspect-ratio: 16/9;
-      background: linear-gradient(135deg, rgba(124, 92, 252, 0.1), rgba(180, 92, 252, 0.05));
+      background: linear-gradient(135deg, rgba(196, 149, 58, 0.1), rgba(212, 168, 74, 0.05));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -351,7 +351,7 @@
       border-radius: 6px;
       font-size: 0.75rem;
       font-weight: 500;
-      background: rgba(124, 92, 252, 0.08);
+      background: rgba(196, 149, 58, 0.08);
       color: var(--accent);
       margin-bottom: 0.5rem;
     }
@@ -386,7 +386,7 @@
       transition: border-color 0.2s, transform 0.2s;
     }
 
-    .writing-card:hover { border-color: rgba(124, 92, 252, 0.3); transform: translateX(4px); }
+    .writing-card:hover { border-color: rgba(196, 149, 58, 0.3); transform: translateX(4px); }
 
     .writing-card .date { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
     .writing-card .title { flex: 1; font-weight: 500; }
@@ -400,7 +400,7 @@
       border-radius: 6px;
       font-size: 0.75rem;
       font-weight: 500;
-      background: rgba(124, 92, 252, 0.08);
+      background: rgba(196, 149, 58, 0.08);
       color: var(--accent);
     }
 
@@ -518,9 +518,9 @@
         top: 64px; left: 0; right: 0;
         flex-direction: column;
         gap: 0;
-        background: rgba(10, 10, 15, 0.95);
+        background: rgba(12, 12, 12, 0.95);
         backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid #1e1814;
         padding: 0.5rem 0;
       }
 
@@ -800,7 +800,7 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2026 &middot; <a href="https://aflacha.com">Aflacha Imadida Rachmata</a> &middot; Built with patience and purple</p>
+    <p>&copy; 2026 &middot; <a href="https://aflacha.com">Aflacha Imadida Rachmata</a> &middot; Built with patience and gold</p>
   </footer>
 
   <!-- Admin link (invisible to most, but there) -->
