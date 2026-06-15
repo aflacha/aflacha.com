@@ -21,8 +21,81 @@ collections:
             default: false
             hint: "Toggle ON to show Coming Soon page. Toggle OFF to show full portfolio."
 
+      - name: "site_content"
+        label: "Site Content (Global)"
+        file: "content/site.md"
+        fields:
+          - label: "Site Title"
+            name: "title"
+            widget: "string"
+            hint: "Your name, used in Portfolio pages"
+          - label: "Meta Description"
+            name: "meta_description"
+            widget: "text"
+          - label: "Nav Logo"
+            name: "nav_logo"
+            widget: "string"
+            hint: "Single letter/icon in nav bar"
+          - label: "Navigation Links"
+            name: "nav_links"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Href", name: "href", widget: "string" }
+
+          # Hero Section
+          - { label: "Hero Badge", name: "hero_badge", widget: "string" }
+          - { label: "Hero Name (HTML ok)", name: "hero_name", widget: "string" }
+          - { label: "Hero Tagline (HTML ok)", name: "hero_tagline", widget: "text" }
+          - label: "Hero Tags"
+            name: "hero_tags"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Accent Color?", name: "accent", widget: "boolean", default: false, required: false }
+          - { label: "CTA Primary Text", name: "cta_primary_text", widget: "string" }
+          - { label: "CTA Primary Href", name: "cta_primary_href", widget: "string" }
+          - { label: "CTA Secondary Text", name: "cta_secondary_text", widget: "string" }
+          - { label: "CTA Secondary Href", name: "cta_secondary_href", widget: "string" }
+          - { label: "Extra Bio (HTML ok)", name: "hero_extra_bio", widget: "text", hint: "Shown after CMS bios." }
+
+          # Section Labels & Titles
+          - { label: "About Label", name: "about_label", widget: "string" }
+          - { label: "About Title", name: "about_title", widget: "string" }
+          - { label: "Services Label", name: "services_label", widget: "string" }
+          - { label: "Services Title", name: "services_title", widget: "string" }
+          - { label: "Portfolio Label", name: "portfolio_label", widget: "string" }
+          - { label: "Portfolio Title (HTML ok)", name: "portfolio_title", widget: "string" }
+          - { label: "Writing Label", name: "writing_label", widget: "string" }
+          - { label: "Writing Title", name: "writing_title", widget: "string" }
+          - { label: "Contact Label", name: "contact_label", widget: "string" }
+          - { label: "Contact Title", name: "contact_title", widget: "string" }
+
+          # Writing Card
+          - { label: "Writing Card Date", name: "writing_card_date", widget: "string" }
+          - { label: "Writing Card Title", name: "writing_card_title", widget: "string" }
+          - { label: "Writing Card URL", name: "writing_card_url", widget: "string" }
+
+          # Social Links (Contact)
+          - { label: "LinkedIn URL", name: "social_linkedin_url", widget: "string" }
+          - { label: "LinkedIn Display Text", name: "social_linkedin_text", widget: "string" }
+          - { label: "GitHub URL", name: "social_github_url", widget: "string" }
+          - { label: "GitHub Display Text", name: "social_github_text", widget: "string" }
+
+          # Footer
+          - { label: "Footer Text", name: "footer_text", widget: "string" }
+          - { label: "Footer Year", name: "footer_year", widget: "string" }
+
+          # Construction Page (Coming Soon)
+          - { label: "Construction Page Title", name: "construction_title", widget: "string" }
+          - { label: "Construction Meta Description", name: "construction_meta_description", widget: "text" }
+          - { label: "Construction Badge Text", name: "construction_badge", widget: "string" }
+          - { label: "Construction Heading", name: "construction_heading", widget: "string" }
+          - { label: "Construction Description (HTML ok)", name: "construction_description", widget: "text" }
+          - { label: "Construction Footer", name: "construction_footer", widget: "string" }
+
       - name: "about"
-        label: "About Section"
+        label: "About Section (Bios)"
         file: "content/about.md"
         fields:
           - { label: "Bio Paragraph 1", name: "bio1", widget: "text" }
