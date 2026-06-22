@@ -133,19 +133,31 @@
     }
 
     /* Hero */
+    :root {
+      --max-width: 1050px;
+    }
+
+    /* Hero — redesigned split layout */
     #hero {
       min-height: calc(100vh - 64px);
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 4rem 1.5rem;
+      padding: 6rem 1.5rem 4rem;
       background-image:
-        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(196, 149, 58, 0.06), transparent),
+        radial-gradient(ellipse 80% 50% at 30% 0%, rgba(196, 149, 58, 0.06), transparent),
         radial-gradient(ellipse 60% 40% at 80% 90%, rgba(196, 149, 58, 0.04), transparent);
     }
 
-    .hero-content { max-width: 720px; }
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+      width: 100%;
+    }
 
     .hero-badge {
       display: inline-flex;
@@ -174,18 +186,14 @@
       50% { opacity: 0.5; transform: scale(0.85); }
     }
 
-    .hero-logo {
-      width: 88px; height: 88px;
-      border-radius: 24px;
-      background: var(--gradient);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1.5rem;
-      font-size: 2.5rem; font-weight: 800; color: #fff;
-      font-family: 'JetBrains Mono', monospace;
-      box-shadow: 0 0 60px var(--accent-glow);
+    .hero-name {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+      text-align: left;
     }
-
-    .hero-name { font-size: 3rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.75rem; }
 
     .hero-name .highlight {
       background: var(--gradient);
@@ -193,9 +201,16 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .hero-tagline { font-size: 1.1rem; color: var(--text-muted); max-width: 560px; margin: 0 auto 2rem; line-height: 1.6; }
+    .hero-tagline {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 0 2rem;
+      line-height: 1.6;
+      text-align: left;
+    }
 
-    .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-bottom: 2.5rem; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
 
     .hero-tag {
       padding: 0.35rem 1rem;
@@ -214,7 +229,7 @@
     }
 
     .hero-cta {
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      display: flex; gap: 1rem; flex-wrap: wrap;
     }
 
     .btn {
@@ -245,8 +260,70 @@
 
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
-    @media (max-width: 640px) {
-      .hero-name { font-size: 2.2rem; }
+    /* Hero photo */
+    .hero-photo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-photo-frame {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 3 / 4;
+      border: 1px solid rgba(196, 149, 58, 0.15);
+      box-shadow:
+        0 0 80px rgba(196, 149, 58, 0.08),
+        0 0 160px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 25%;
+      display: block;
+    }
+
+    /* Glow behind photo */
+    .hero-photo-glow {
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      top: -10%;
+      left: -10%;
+      background: radial-gradient(ellipse at center, rgba(196, 149, 58, 0.06), transparent 70%);
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+
+      .hero-name,
+      .hero-tagline,
+      .hero-cta,
+      .hero-tags {
+        text-align: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-tagline { margin-left: auto; margin-right: auto; }
+
+      .hero-photo-frame {
+        max-width: 320px;
+      }
+
+      .hero-name { font-size: 2.4rem; }
       .hero-tagline { font-size: 1rem; }
       #hero { min-height: 90vh; }
     }
@@ -581,22 +658,29 @@
 
   <!-- Hero -->
   <section id="hero">
-    <div class="hero-content">
-      <div class="hero-badge"><span class="hero-badge-dot"></span>Available for projects</div>
-      <div class="hero-logo">V</div>
-      <h1 class="hero-name"><span class="highlight">Aflacha</span> "Val" <span class="highlight">Rachmata</span></h1>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge"><span class="hero-badge-dot"></span>Available for projects</div>
+        <h1 class="hero-name"><span class="highlight">Aflacha</span> "Val" <span class="highlight">Rachmata</span></h1>
       <p class="hero-tagline">
         COO & Co-founder at Artelysium Studios — building games, experiences, and teams that ship.
       </p>
-      <div class="hero-tags">
+        <div class="hero-tags">
         <span class="hero-tag accent">Game Designer</span>
         <span class="hero-tag accent">UX/UI Designer</span>
         <span class="hero-tag accent">Producer</span>
         <span class="hero-tag accent">Project Manager</span>
         <span class="hero-tag accent">Product Lead</span>
-      </div>
+        </div>
         <a href="#portfolio" class="btn btn-primary">See My Work</a>
         <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+      <div class="hero-photo">
+        <div class="hero-photo-glow"></div>
+        <div class="hero-photo-frame" id="hero-photo-frame">
+          <img src="/images/val-pool-night.jpg" alt="Aflacha Rachmata — portfolio photo" loading="eager">
+        </div>
+      </div>
     </div>
   </section>
 
