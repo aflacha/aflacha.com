@@ -8,385 +8,490 @@
   <link rel="icon" type="image/svg+xml" href="<!--CMS:FAVICON-->/images/favicon.svg<!--/CMS:FAVICON-->">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-    :root {
-      --bg: #050505;
-      --bg-card: #0c0c0c;
-      --border: #1a1a1a;
-      --border-hover: #2a2a2a;
-      --text: #f0f0f0;
-      --text-muted: #888;
-      --text-dim: #555;
-      --accent: #fff;
-      --max-width: 1400px;
+    :root{
+      --bg:#0b0b0b;
+      --bg-card:#111;
+      --bg-hover:#181818;
+      --border:#1e1e1e;
+      --border-hover:#333;
+      --text:#e8e8e8;
+      --text-muted:#666;
+      --text-dim:#333;
+      --accent:#fff;
+      --accent-glow:rgba(255,255,255,0.03);
+      --photo-border:1px solid #222;
+      --max-width:1200px;
+      --display:'Space Grotesk',sans-serif;
+      --sans:'Inter',-apple-system,sans-serif
     }
 
-    html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+    html{font-size:16px;scroll-behavior:smooth}
+    body{
+      font-family:var(--sans);
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden
     }
 
-    /* ══ Nav ══ */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(5,5,5,0.85); backdrop-filter: blur(12px);
-      border-bottom: 1px solid #111;
+    /* Container */
+    .dash-wrap{max-width:var(--max-width);margin:0 auto;padding:0 1.5rem}
+
+    /* ══ Nav — game UI bar ══ */
+    nav{
+      position:sticky;top:0;z-index:100;
+      background:rgba(11,11,11,0.92);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--border)
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      height:56px
+    }
+    .nav-logo{
+      font-family:var(--display);font-weight:700;font-size:1rem;
+      color:var(--text);text-decoration:none;
+      display:flex;align-items:center;gap:0.4rem
+    }
+    .nav-logo .badge{
+      display:inline-flex;align-items:center;
+      padding:0.1rem 0.4rem;border-radius:3px;
+      font-size:0.55rem;font-weight:600;
+      background:var(--border);color:var(--text-muted);
+      letter-spacing:0.08em
+    }
+    .nav-links{display:flex;gap:1px;list-style:none}
+    .nav-links a{
+      display:block;padding:0.5rem 1rem;
+      color:var(--text-muted);text-decoration:none;
+      font-size:0.75rem;font-weight:500;
+      transition:all 0.15s;
+      border-radius:4px
+    }
+    .nav-links a:hover{background:var(--bg-hover);color:var(--text)}
+    .nav-mobile-toggle{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:4px}
+    .nav-mobile-toggle span{display:block;width:20px;height:2px;background:var(--text-muted);border-radius:1px}
+
+    /* ══ Dashboard hero — two column ══ */
+    #hero{
+      padding:3rem 0 0;
+      border-bottom:1px solid var(--border)
+    }
+    .dash-hero{
+      display:grid;
+      grid-template-columns:300px 1fr;
+      gap:2rem;
+      align-items:start
     }
 
-    .nav-inner {
-      max-width: var(--max-width); margin: 0 auto;
-      padding: 0 1.5rem; display: flex; align-items: center;
-      justify-content: space-between; height: 56px;
+    /* Left — profile card */
+    .profile-card{
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      padding:1.5rem;
+      position:sticky;top:4.5rem
+    }
+    .profile-card .avatar{
+      width:100%;aspect-ratio:1;
+      overflow:hidden;
+      border:1px solid var(--border);
+      margin-bottom:1rem
+    }
+    .profile-card .avatar img{
+      width:100%;height:100%;
+      object-fit:cover;object-position:50% 20%;
+      filter:grayscale(100%) contrast(1.05);
+      display:block
+    }
+    .profile-card h1{
+      font-family:var(--display);
+      font-size:1.4rem;font-weight:700;
+      line-height:1.1;
+      margin-bottom:0.25rem
+    }
+    .profile-card .role{
+      color:var(--text-muted);
+      font-size:0.8rem;
+      margin-bottom:1rem
+    }
+    .profile-card .status{
+      display:flex;align-items:center;gap:0.4rem;
+      font-size:0.7rem;color:var(--text-muted);
+      padding:0.25rem 0.7rem;
+      border:1px solid var(--border);
+      width:fit-content;
+      margin-bottom:1rem
+    }
+    .profile-card .status .dot{
+      width:6px;height:6px;border-radius:50%;
+      background:#4ade80
+    }
+    .profile-mini-stat{
+      display:grid;grid-template-columns:1fr 1fr;gap:0.5rem
+    }
+    .profile-mini-stat div{
+      padding:0.5rem;
+      background:rgba(255,255,255,0.015);
+      border:1px solid var(--border)
+    }
+    .profile-mini-stat .n{font-size:1rem;font-weight:700;color:var(--text)}
+    .profile-mini-stat .l{font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em}
+
+    /* Right — dashboard grid */
+    .dash-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:0.75rem;
+      padding-bottom:3rem
+    }
+    .dash-card{
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      padding:1.25rem;
+      transition:border-color 0.15s
+    }
+    .dash-card:hover{border-color:var(--border-hover)}
+    .dash-card.span-2{grid-column:span 2}
+
+    .dash-card-label{
+      font-size:0.6rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:var(--text-dim);
+      margin-bottom:0.5rem
     }
 
-    .nav-logo { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.1rem; color: #fff; text-decoration: none; }
-
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-    .nav-links a { color: #666; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: #fff; }
-
-    .nav-mobile-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
-    .nav-mobile-toggle span { display: block; width: 24px; height: 2px; background: #777; border-radius: 2px; }
-
-    /* ══ Dashboard hero ══ */
-    #hero {
-      padding-top: 56px;
-      min-height: 100vh;
-      background: var(--bg);
+    .tag-strip{display:flex;flex-wrap:wrap;gap:0.3rem}
+    .tag-strip span{
+      padding:0.15rem 0.5rem;
+      border-radius:3px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid var(--border);
+      font-size:0.7rem;color:var(--text-muted)
+    }
+    .tag-strip span.accent{
+      background:var(--accent-glow);
+      border-color:var(--border-hover);
+      color:var(--text)
     }
 
-    .dashboard {
-      max-width: var(--max-width); margin: 0 auto;
-      padding: 2rem 1.5rem;
-      min-height: calc(100vh - 56px);
+    .dash-text p{
+      font-size:0.85rem;color:var(--text-muted);margin-bottom:0.4rem
     }
 
-    /* Two-column layout: sidebar + grid */
-    .dash-main {
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 1px;
-      background: #111;
-      border: 1px solid #111;
-      border-radius: 20px;
-      overflow: hidden;
-      min-height: calc(100vh - 56px - 4rem);
+    .dash-portfolio-grid{
+      display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem
+    }
+    .dash-portfolio-grid .p-item{
+      aspect-ratio:16/10;
+      background:linear-gradient(135deg,#111,#0a0a0a);
+      border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.3rem;color:var(--text-dim);
+      transition:border-color 0.15s;
+      cursor:default
+    }
+    .dash-portfolio-grid .p-item:hover{border-color:var(--border-hover)}
+
+    .dash-mini-link{
+      display:flex;align-items:center;gap:0.4rem;
+      font-size:0.8rem;color:var(--text-muted);text-decoration:none;
+      transition:color 0.15s
+    }
+    .dash-mini-link:hover{color:var(--text)}
+
+    .dash-contact-strip{
+      display:flex;flex-wrap:wrap;gap:0.5rem
+    }
+    .dash-contact-strip a{
+      display:inline-flex;align-items:center;gap:0.35rem;
+      padding:0.3rem 0.7rem;
+      border:1px solid var(--border);
+      font-size:0.7rem;color:var(--text-muted);text-decoration:none;
+      transition:all 0.15s
+    }
+    .dash-contact-strip a:hover{border-color:var(--border-hover);color:var(--text)}
+    .dash-contact-strip svg{width:12px;height:12px}
+
+    .btn{
+      display:inline-flex;align-items:center;gap:0.35rem;
+      padding:0.5rem 1rem;
+      font-family:var(--sans);font-size:0.75rem;font-weight:600;
+      text-decoration:none;transition:all 0.15s;cursor:pointer
+    }
+    .btn-primary{
+      background:var(--accent);color:var(--bg);border:none
+    }
+    .btn-primary:hover{opacity:0.85}
+    .btn-outline{
+      background:transparent;color:var(--text-muted);
+      border:1px solid var(--border)
+    }
+    .btn-outline:hover{border-color:var(--text);color:var(--text)}
+
+    /* Timeline inline */
+    .timeline-mini{
+      display:flex;flex-direction:column;gap:0.6rem
+    }
+    .timeline-mini-item{
+      display:grid;
+      grid-template-columns:50px 1fr;
+      gap:0.75rem;
+      align-items:start
+    }
+    .timeline-mini-year{
+      font-family:var(--display);
+      font-size:0.75rem;
+      font-weight:600;
+      color:var(--text-dim);
+      padding-top:0.1rem
+    }
+    .timeline-mini-content{}
+    .timeline-mini-role{
+      font-size:0.8rem;
+      font-weight:600;
+      color:var(--text);
+      line-height:1.2
+    }
+    .timeline-mini-desc{
+      font-size:0.7rem;
+      color:var(--text-muted);
+      line-height:1.4
     }
 
-    /* Left sidebar — profile panel */
-    .dash-sidebar {
-      background: #080808;
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+    /* Services inline */
+    .services-mini{
+      display:grid;grid-template-columns:1fr 1fr;gap:0.5rem
     }
-
-    .dash-sidebar::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.015), transparent 70%);
+    .services-mini-item{
+      padding:0.6rem;
+      background:rgba(255,255,255,0.01);
+      border:1px solid var(--border)
     }
+    .services-mini-item .icon{font-size:0.9rem}
+    .services-mini-item h4{font-size:0.75rem;font-weight:600;margin-bottom:0.2rem}
+    .services-mini-item p{font-size:0.65rem;color:var(--text-muted);line-height:1.4}
 
-    .dash-photo-frame {
-      width: 130px; height: 130px;
-      border-radius: 50%;
-      background: #121212;
-      border: 1px solid #1a1a1a;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-      position: relative; z-index: 1;
+    /* Contact form */
+    .dash-form input,.dash-form textarea{
+      width:100%;padding:0.5rem 0.75rem;margin-bottom:0.4rem;
+      border:1px solid var(--border);background:var(--bg);
+      color:var(--text);font-family:var(--sans);
+      font-size:0.75rem;outline:none
     }
+    .dash-form input:focus,.dash-form textarea:focus{border-color:var(--border-hover)}
+    .dash-form textarea{min-height:60px;resize:vertical}
+    .dash-form-success{display:none;color:var(--text-muted);font-size:0.75rem;padding:0.25rem 0}
 
-    .dash-photo-frame img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: 50% 25%;
-      filter: grayscale(100%) contrast(1.1);
+    footer{
+      text-align:center;padding:2rem 1.5rem;
+      font-size:0.7rem;color:var(--text-dim)
     }
+    footer a{color:var(--text-muted);text-decoration:none}
+    footer a:hover{color:var(--text)}
 
-    .dash-name {
-      font-size: 1.8rem;
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 0.3rem;
-      position: relative; z-index: 1;
+    .admin-link{
+      position:fixed;bottom:1rem;right:1rem;z-index:99;
+      width:32px;height:32px;
+      border:1px solid var(--border);background:var(--bg-card);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--text-dim);text-decoration:none;
+      font-size:0.65rem;opacity:0.4;transition:all 0.15s
     }
+    .admin-link:hover{opacity:1;border-color:var(--text);color:var(--text)}
 
-    .dash-role {
-      color: #666;
-      font-size: 0.85rem;
-      margin-bottom: 1.5rem;
-      position: relative; z-index: 1;
+    @media(max-width:900px){
+      .dash-hero{grid-template-columns:1fr}
+      .profile-card{position:static}
+      .profile-card .avatar{max-width:200px}
+      .dash-grid{grid-template-columns:1fr}
+      .dash-card.span-2,.services-mini{grid-column:span 1}
+      .dash-portfolio-grid{grid-template-columns:1fr 1fr}
     }
-
-    .dash-badge {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.3rem 0.8rem; border-radius: 100px;
-      background: rgba(255,255,255,0.03); border: 1px solid #1a1a1a;
-      font-size: 0.7rem; font-weight: 500; color: #777;
-      letter-spacing: 0.05em; width: fit-content;
-      position: relative; z-index: 1;
-    }
-
-    .dash-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: pulse-dot 2s ease-in-out infinite; }
-
-    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.85)} }
-
-    /* Right grid */
-    .dash-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: #111;
-    }
-
-    .dash-cell {
-      background: #0a0a0a;
-      padding: 1.75rem;
-    }
-
-    .dash-cell.span-2 { grid-column: span 2; }
-
-    .dash-cell-label {
-      font-size: 0.65rem; color: #444; letter-spacing: 0.15em;
-      text-transform: uppercase; margin-bottom: 0.75rem;
-    }
-
-    .dash-tags {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-    }
-
-    .dash-tag {
-      padding: 0.3rem 0.8rem; border-radius: 6px;
-      background: rgba(255,255,255,0.03); border: 1px solid #1a1a1a;
-      font-size: 0.75rem; color: #666; font-weight: 400;
-    }
-
-    .dash-tag.accent {
-      background: rgba(255,255,255,0.05); border-color: #2a2a2a; color: #bbb;
-    }
-
-    .dash-stats {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;
-    }
-
-    .dash-stat {
-      padding: 0.75rem; border-radius: 10px;
-      background: rgba(255,255,255,0.015); border: 1px solid #141414;
-    }
-
-    .dash-stat .num { font-size: 1.1rem; font-weight: 700; color: #e0e0e0; }
-    .dash-stat .lbl { font-size: 0.7rem; color: #555; }
-
-    .dash-text p { font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 0.5rem; }
-    .dash-text p strong { color: #ccc; }
-
-    .dash-portfolio {
-      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;
-    }
-
-    .dash-pcard {
-      aspect-ratio: 16/10; border-radius: 8px;
-      background: linear-gradient(135deg, #0d0d0d, #080808);
-      border: 1px solid #161616;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; color: #333;
-      transition: border-color 0.2s;
-    }
-
-    .dash-pcard:hover { border-color: #2a2a2a; }
-
-    .dash-cta { display: flex; gap: 0.5rem; }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.55rem 1.1rem; border-radius: 8px;
-      font-family: inherit; font-size: 0.8rem; font-weight: 600;
-      text-decoration: none; cursor: pointer; transition: all 0.2s;
-    }
-
-    .btn-primary { background: #fff; color: #050505; border: none; }
-    .btn-primary:hover { background: #ccc; }
-
-    .btn-outline { background: transparent; color: #888; border: 1px solid #222; }
-    .btn-outline:hover { border-color: #fff; color: #fff; }
-
-    .dash-writing { font-size: 0.85rem; }
-    .dash-writing a { color: #888; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
-    .dash-writing a:hover { color: #fff; }
-    .dash-writing .arrow { color: #444; }
-
-    .dash-contact-links { display: flex; flex-direction: column; gap: 0.5rem; }
-    .dash-contact-links a {
-      display: flex; align-items: center; gap: 0.5rem;
-      font-size: 0.8rem; color: #666; text-decoration: none;
-      padding: 0.4rem 0; transition: color 0.2s;
-    }
-    .dash-contact-links a:hover { color: #ccc; }
-    .dash-contact-links svg { width: 14px; height: 14px; color: #444; }
-
-    /* Contact form in dashboard */
-    .dash-form input, .dash-form textarea {
-      width: 100%; padding: 0.5rem 0.75rem; margin-bottom: 0.5rem;
-      border-radius: 6px; border: 1px solid #1a1a1a;
-      background: #080808; color: var(--text);
-      font-family: inherit; font-size: 0.8rem; outline: none;
-    }
-    .dash-form input:focus, .dash-form textarea:focus { border-color: #444; }
-    .dash-form textarea { min-height: 60px; resize: vertical; }
-    .dash-form button {
-      padding: 0.5rem 1rem; border-radius: 6px; border: none;
-      background: #fff; color: #050505;
-      font-family: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer;
-    }
-    .dash-form button:hover { opacity: 0.85; }
-
-    .dash-form-success { display: none; color: #888; font-size: 0.8rem; padding: 0.5rem 0; }
-
-    @media (max-width: 900px) {
-      .dash-main { grid-template-columns: 1fr; border-radius: 12px; }
-      .dash-grid { grid-template-columns: 1fr; }
-      .dash-cell.span-2 { grid-column: span 1; }
-      .dash-portfolio { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 640px) {
-      .nav-links {
-        display: none; position: absolute; top: 56px; left: 0; right: 0;
-        flex-direction: column; gap: 0;
-        background: rgba(5,5,5,0.95); backdrop-filter: blur(12px);
-        border-bottom: 1px solid #111; padding: 0.5rem 0;
+    @media(max-width:640px){
+      .nav-links{
+        display:none;position:absolute;top:56px;left:0;right:0;
+        flex-direction:column;gap:2px;
+        background:rgba(11,11,11,0.98);border-bottom:1px solid var(--border);
+        padding:0.5rem;z-index:100
       }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 0.75rem 1.5rem; font-size: 1rem; }
-      .nav-mobile-toggle { display: flex; }
+      .nav-links.open{display:flex}
+      .nav-mobile-toggle{display:flex}
+      .services-mini{grid-template-columns:1fr}
     }
-
-    /* ══ Admin link ══ */
-    .admin-link {
-      position: fixed; bottom: 1rem; right: 1rem; z-index: 99;
-      width: 36px; height: 36px; border-radius: 8px;
-      background: #0c0c0c; border: 1px solid #1a1a1a;
-      display: flex; align-items: center; justify-content: center;
-      color: #444; text-decoration: none; font-size: 0.75rem;
-      font-weight: 600; opacity: 0.4; transition: all 0.2s;
-    }
-    .admin-link:hover { opacity: 1; border-color: #555; color: #fff; }
   </style>
 </head>
 <body>
+
   <!-- Nav -->
   <nav>
-    <div class="nav-inner">
-      <a href="#" class="nav-logo"><!--CMS:NAV_LOGO-->A<!--/CMS:NAV_LOGO--></a>
-      <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links" id="nav-links">
-        <!--CMS:NAV_LINKS-->
-        <li><a href="#hero">About</a></li>
-        <li><a href="#services">What I Do</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#writing">Writing</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <!--/CMS:NAV_LINKS-->
-      </ul>
+    <div class="dash-wrap">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo"><!--CMS:NAV_LOGO-->Aflacha <span class="badge">COO</span><!--/CMS:NAV_LOGO--></a>
+        <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+          <!--CMS:NAV_LINKS-->
+          <li><a href="#hero">Profile</a></li>
+          <li><a href="#timeline">Timeline</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <!--/CMS:NAV_LINKS-->
+        </ul>
+      </div>
     </div>
   </nav>
 
   <!-- Dashboard Hero -->
   <section id="hero">
-    <div class="dashboard">
-      <div class="dash-main">
-        <!-- Left sidebar -->
-        <div class="dash-sidebar">
-          <div class="dash-photo-frame">
-            <img src="/images/val-pool-night.jpg" alt="Aflacha Rachmata">
+    <div class="dash-wrap">
+      <div class="dash-hero">
+        <!-- Left: Profile Card -->
+        <div class="profile-card">
+          <div class="avatar">
+            <img src="/images/val-pool-night.jpg" alt="Aflacha Rachmata" loading="eager">
           </div>
-          <div class="dash-badge"><span class="dot"></span><!--CMS:HERO_BADGE-->Available<!--/CMS:HERO_BADGE--></div>
-          <div class="dash-name"><!--CMS:HERO_NAME-->Aflacha<br>Rachmata<!--/CMS:HERO_NAME--></div>
-          <div class="dash-role">COO &middot; Artelysium Studios</div>
+          <h1><!--CMS:HERO_NAME-->Aflacha Rachmata<!--/CMS:HERO_NAME--></h1>
+          <div class="role"><!--CMS:TAGLINE-->COO · Artelysium Studios<!--/CMS:TAGLINE--></div>
+          <div class="status"><span class="dot"></span><!--CMS:HERO_BADGE-->Available for projects<!--/CMS:HERO_BADGE--></div>
+          <div class="tag-strip" style="margin-bottom:1rem">
+            <!--CMS:HERO_TAGS-->
+            <span class="accent">Game Design</span>
+            <span>UX/UI</span>
+            <span>Production</span>
+            <span>PM</span>
+            <span>Product Lead</span>
+            <!--/CMS:HERO_TAGS-->
+          </div>
+          <!--CMS:ABOUT_STATS-->
+          <div class="profile-mini-stat">
+            <div><div class="n">10+</div><div class="l">Years</div></div>
+            <div><div class="n">1</div><div class="l">Studio</div></div>
+            <div><div class="n">1</div><div class="l">Community</div></div>
+            <div><div class="n">🏆</div><div class="l">Award</div></div>
+          </div>
+          <!--/CMS:ABOUT_STATS-->
           <!--CMS:HERO_CTA-->
-          <div class="dash-cta">
-            <a href="#portfolio" class="btn btn-primary">See Work</a>
+          <div style="display:flex;gap:0.5rem;margin-top:1rem">
+            <a href="#timeline" class="btn btn-primary">Timeline</a>
             <a href="#contact" class="btn btn-outline">Contact</a>
           </div>
           <!--/CMS:HERO_CTA-->
         </div>
 
-        <!-- Right grid -->
+        <!-- Right: Dashboard Grid -->
         <div class="dash-grid">
-          <!-- About / Tagline -->
-          <div class="dash-cell span-2">
-            <div class="dash-cell-label">About</div>
-            <!--CMS:TAGLINE--><div class="dash-text"><p>COO &amp; Co-founder at Artelysium Studios — building games, experiences, and teams that ship.</p></div><!--/CMS:TAGLINE-->
+
+          <!-- About -->
+          <div class="dash-card span-2">
+            <div class="dash-card-label">About</div>
+            <!--CMS:ABOUT_TEXT-->
+            <div class="dash-text">
+              <p>Started as a <strong>web front-end developer</strong> in 2013, moved through <strong>project management</strong> and <strong>freelance</strong>, then found my true calling in <strong>game design</strong> in late 2015. Today I'm <strong>COO &amp; Co-founder of Artelysium Studios</strong>.</p>
+              <p>Founded <strong>Kolektif untuk Gamedev Indonesia</strong>. Dicoding Community Driver Award (2017).</p>
+            </div>
+            <!--/CMS:ABOUT_TEXT-->
           </div>
 
-          <!-- Tags -->
-          <div class="dash-cell">
-            <div class="dash-cell-label">Skills</div>
-            <div class="dash-tags">
-              <!--CMS:HERO_TAGS-->
-              <span class="dash-tag accent">Game Design</span>
-              <span class="dash-tag">UX/UI</span>
-              <span class="dash-tag">Production</span>
-              <span class="dash-tag">PM</span>
-              <span class="dash-tag">Product Lead</span>
-              <!--/CMS:HERO_TAGS-->
+          <!-- What I Do -->
+          <div class="dash-card span-2">
+            <div class="dash-card-label">What I Do</div>
+            <!--CMS:SERVICES_CARDS-->
+            <div class="services-mini">
+              <div class="services-mini-item">
+                <div class="icon">🎲</div>
+                <h4>Game Design</h4>
+                <p>Mechanics, systems, narrative, player experience — concept to launch.</p>
+              </div>
+              <div class="services-mini-item">
+                <div class="icon">🎨</div>
+                <h4>UX/UI Design</h4>
+                <p>Wireframes, prototypes, interaction design for games and products.</p>
+              </div>
+              <div class="services-mini-item">
+                <div class="icon">🎬</div>
+                <h4>Production</h4>
+                <p>Pipelines, milestones, team coordination — shipping without burnout.</p>
+              </div>
+              <div class="services-mini-item">
+                <div class="icon">📋</div>
+                <h4>Project Mgmt</h4>
+                <p>Agile, roadmaps, risk management, cross-disciplinary alignment.</p>
+              </div>
             </div>
-          </div>
-
-          <!-- Stats -->
-          <div class="dash-cell">
-            <div class="dash-cell-label">Stats</div>
-            <!--CMS:ABOUT_STATS-->
-            <div class="dash-stats">
-              <div class="dash-stat"><div class="num">10+</div><div class="lbl">Years</div></div>
-              <div class="dash-stat"><div class="num">1</div><div class="lbl">Studio</div></div>
-              <div class="dash-stat"><div class="num">1</div><div class="lbl">Community</div></div>
-              <div class="dash-stat"><div class="num">🏆</div><div class="lbl">Award</div></div>
-            </div>
-            <!--/CMS:ABOUT_STATS-->
+            <!--/CMS:SERVICES_CARDS-->
           </div>
 
           <!-- Portfolio -->
-          <div class="dash-cell span-2" id="portfolio">
-            <div class="dash-cell-label">Portfolio</div>
-            <div class="dash-portfolio">
-              <!--CMS:PORTFOLIO_CARDS-->
-              <div class="dash-pcard">🎮</div>
-              <div class="dash-pcard">🎨</div>
-              <div class="dash-pcard">🛠️</div>
-              <!--/CMS:PORTFOLIO_CARDS-->
+          <div class="dash-card span-2">
+            <div class="dash-card-label">Portfolio</div>
+            <!--CMS:PORTFOLIO_CARDS-->
+            <div class="dash-portfolio-grid">
+              <div class="p-item">🎮</div>
+              <div class="p-item">🎨</div>
+              <div class="p-item">🛠️</div>
+            </div>
+            <!--/CMS:PORTFOLIO_CARDS-->
+          </div>
+
+          <!-- Timeline (inline, mini) -->
+          <div class="dash-card span-2" id="timeline">
+            <div class="dash-card-label">Career Timeline</div>
+            <div class="timeline-mini">
+              <div class="timeline-mini-item">
+                <div class="timeline-mini-year">2025</div>
+                <div class="timeline-mini-content">
+                  <div class="timeline-mini-role">COO @ Artelysium</div>
+                  <div class="timeline-mini-desc">Operations, pipelines, team strategy.</div>
+                </div>
+              </div>
+              <div class="timeline-mini-item">
+                <div class="timeline-mini-year">2020</div>
+                <div class="timeline-mini-content">
+                  <div class="timeline-mini-role">Lead Game Designer</div>
+                  <div class="timeline-mini-desc">Systems design, UX/UI, mentoring.</div>
+                </div>
+              </div>
+              <div class="timeline-mini-item">
+                <div class="timeline-mini-year">2015</div>
+                <div class="timeline-mini-content">
+                  <div class="timeline-mini-role">Game Designer</div>
+                  <div class="timeline-mini-desc">Game design + founded Kolektif.</div>
+                </div>
+              </div>
+              <div class="timeline-mini-item">
+                <div class="timeline-mini-year">2013</div>
+                <div class="timeline-mini-content">
+                  <div class="timeline-mini-role">Front-End Dev</div>
+                  <div class="timeline-mini-desc">Foundation in UX, code, and PM.</div>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Writing -->
-          <div class="dash-cell" id="writing">
-            <div class="dash-cell-label">Writing</div>
-            <div class="dash-writing">
-              <!--CMS:WRITING_CARD-->
-              <a href="https://medium.com/@aflacha" target="_blank" rel="noopener">
-                Read on Medium <span class="arrow">→</span>
-              </a>
-              <!--/CMS:WRITING_CARD-->
-            </div>
+          <div class="dash-card">
+            <div class="dash-card-label">Writing</div>
+            <!--CMS:WRITING_CARD-->
+            <a href="https://medium.com/@aflacha" target="_blank" rel="noopener" class="dash-mini-link">
+              Read on Medium →
+            </a>
+            <!--/CMS:WRITING_CARD-->
           </div>
 
-          <!-- Contact -->
-          <div class="dash-cell" id="contact">
-            <div class="dash-cell-label">Contact</div>
+          <!-- Contact links -->
+          <div class="dash-card" id="contact">
+            <div class="dash-card-label">Connect</div>
             <!--CMS:CONTACT_LINKS-->
-            <div class="dash-contact-links">
+            <div class="dash-contact-strip">
+              <a href="mailto:aflacha@artelysium.com">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Email
+              </a>
               <a href="https://linkedin.com/in/aflacha" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                 LinkedIn
@@ -398,44 +503,63 @@
             </div>
             <!--/CMS:CONTACT_LINKS-->
           </div>
+
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer style="text-align:center;padding:2rem 1.5rem;font-size:0.75rem;color:#333;">
-    <p>&copy; <!--CMS:FOOTER_YEAR-->2026<!--/CMS:FOOTER_YEAR--> &middot; <a href="https://aflacha.com" style="color:#444;text-decoration:none;"><!--CMS:FOOTER_NAME-->Aflacha Imadida Rachmata<!--/CMS:FOOTER_NAME--></a> &middot; <!--CMS:FOOTER_TEXT-->Built with black and white<!--/CMS:FOOTER_TEXT--></p>
+  <!-- Contact form section -->
+  <section id="contact-form-section" style="padding:3rem 0;border-top:1px solid var(--border)">
+    <div class="dash-wrap">
+      <div style="max-width:500px">
+        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:0.5rem">Send a message</div>
+        <form class="dash-form" id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+          <input type="text" name="name" placeholder="Your name" required>
+          <input type="email" name="email" placeholder="Your email" required>
+          <textarea name="message" placeholder="What's on your mind?" required></textarea>
+          <button class="btn btn-primary">Send Message</button>
+          <div class="dash-form-success" id="form-success">✓ Message sent.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; <!--CMS:FOOTER_YEAR-->2026<!--/CMS:FOOTER_YEAR--> &middot; <a href="https://aflacha.com"><!--CMS:FOOTER_NAME-->Aflacha Rachmata<!--/CMS:FOOTER_NAME--></a> &middot; <!--CMS:FOOTER_TEXT-->dashboard mode<!--/CMS:FOOTER_TEXT--></p>
   </footer>
+
+  <!-- Hidden CMS markers for sections not displayed inline -->
+  <div style="display:none">
+    <!--CMS:EXTRA_BIO--><!--/CMS:EXTRA_BIO-->
+    <!--CMS:ABOUT_HEADER--><!--/CMS:ABOUT_HEADER-->
+    <!--CMS:SERVICES_HEADER--><!--/CMS:SERVICES_HEADER-->
+    <!--CMS:PORTFOLIO_HEADER--><!--/CMS:PORTFOLIO_HEADER-->
+    <!--CMS:WRITING_HEADER--><!--/CMS:WRITING_HEADER-->
+    <!--CMS:CONTACT_HEADER--><!--/CMS:CONTACT_HEADER-->
+    <!--CMS:CONTACT_INTRO--><!--/CMS:CONTACT_INTRO-->
+    <!--CMS:CONTACT_EMAIL--><!--/CMS:CONTACT_EMAIL-->
+  </div>
 
   <a href="/admin/" class="admin-link" title="CMS" target="_blank" rel="noopener">⚙</a>
 
-  <div style="display:none">
-    <!--CMS:ABOUT_HEADER--><!--/CMS:ABOUT_HEADER-->
-    <!--CMS:ABOUT_TEXT--><!--/CMS:ABOUT_TEXT-->
-    <!--CMS:CONTACT_EMAIL--><!--/CMS:CONTACT_EMAIL-->
-    <!--CMS:CONTACT_HEADER--><!--/CMS:CONTACT_HEADER-->
-    <!--CMS:CONTACT_INTRO--><!--/CMS:CONTACT_INTRO-->
-    <!--CMS:EXTRA_BIO--><!--/CMS:EXTRA_BIO-->
-    <!--CMS:PORTFOLIO_HEADER--><!--/CMS:PORTFOLIO_HEADER-->
-    <!--CMS:SERVICES_CARDS--><!--/CMS:SERVICES_CARDS-->
-    <!--CMS:SERVICES_HEADER--><!--/CMS:SERVICES_HEADER-->
-    <!--CMS:WRITING_HEADER--><!--/CMS:WRITING_HEADER-->
-  </div>
-
   <script>
-    document.getElementById('nav-toggle')?.addEventListener('click', () => {
-      document.getElementById('nav-links')?.classList.toggle('open');
+    document.getElementById('nav-toggle')?.addEventListener('click',()=>{
+      document.getElementById('nav-links')?.classList.toggle('open')
+    });
+    const form=document.getElementById('contact-form'),success=document.getElementById('form-success');
+    form?.addEventListener('submit',function(e){
+      e.preventDefault();
+      form.querySelectorAll('input,textarea,button').forEach(el=>el.style.display='none');
+      success.style.display='block'
     });
   </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', function(user) {
-        if (!user && window.location.hash.includes('invite_token')) {
-          window.netlifyIdentity.on('login', function() {
-            window.location.href = '/admin/';
-          });
+    if(window.netlifyIdentity){
+      window.netlifyIdentity.on('init',function(user){
+        if(!user&&window.location.hash.includes('invite_token')){
+          window.netlifyIdentity.on('login',function(){window.location.href='/admin/'})
         }
       });
     }

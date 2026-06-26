@@ -8,953 +8,534 @@
   <link rel="icon" type="image/svg+xml" href="<!--CMS:FAVICON-->/images/favicon.svg<!--/CMS:FAVICON-->">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    /* ═══════════════════════════════════════════════
-       MONOCHROME DESIGN TOKENS
-       ═══════════════════════════════════════════════ */
-    :root {
-      --bg: #050505;
-      --bg-secondary: #0a0a0a;
-      --bg-card: #121212;
-      --border: #222222;
-      --border-light: #2e2e2e;
-      --text: #f0f0f0;
-      --text-muted: #888888;
-      --text-dim: #555555;
-      --accent: #ffffff;
-      --accent-hover: #cccccc;
-      --accent-glow: rgba(255, 255, 255, 0.04);
-      --accent-subtle: rgba(255, 255, 255, 0.06);
-      --gradient: linear-gradient(135deg, #e0e0e0, #ffffff);
-      --max-width: 1350px;
-      --timeline-line: #1a1a1a;
-      --timeline-dot: #222;
-      --timeline-dot-active: #fff;
-    }
-
-    html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* ══ Navigation ══ */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(5, 5, 5, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid #181818;
-    }
-
-    .nav-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-    }
-
-    .nav-logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: 0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: #777;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: #fff; }
-
-    .nav-mobile-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
-
-    .nav-mobile-toggle span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: #777;
-      border-radius: 2px;
-      transition: all 0.2s;
-    }
-
-    /* ══ Sections common ══ */
-    section { padding: 6rem 1.5rem; }
-
-    .section-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #666;
-      margin-bottom: 0.75rem;
-    }
-
-    .section-title {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 3rem;
-      line-height: 1.3;
-      color: #f0f0f0;
-    }
-
-    @media (max-width: 640px) {
-      .section-title { font-size: 1.6rem; margin-bottom: 2rem; }
-    }
-
-    /* ═══════════════════════════════════════════════
-       HERO — DIAGONAL SPLIT
-       ═══════════════════════════════════════════════ */
-    #hero {
-      min-height: calc(100vh - 64px);
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
-      background: var(--bg);
-    }
-
-    .hero-inner {
-      width: 100%;
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 6rem 1.5rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      min-height: calc(100vh - 64px);
-      align-items: center;
-      position: relative;
-    }
-
-    .hero-photo {
-      position: relative;
-      height: 100%;
-      min-height: 70vh;
-      clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
-      overflow: hidden;
-    }
-
-    .hero-photo::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(5, 5, 5, 0.6) 0%, rgba(5, 5, 5, 0) 50%);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .hero-photo img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 50% 25%;
-      filter: grayscale(100%) contrast(1.1);
-      display: block;
-    }
-
-    .hero-text {
-      position: relative;
-      z-index: 3;
-      padding: 3rem;
-      padding-left: 0;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 1rem;
-      border-radius: 100px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #aaa;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-    }
-
-    .hero-badge-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #fff;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
-
-    .hero-name {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 0.5rem;
-      text-align: left;
-    }
-
-    .hero-name .highlight { color: #fff; }
-
-    .hero-tagline {
-      font-size: 1.1rem;
-      color: #777;
-      max-width: 520px;
-      margin: 0 0 2rem;
-      line-height: 1.6;
-      text-align: left;
-    }
-
-    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
-
-    .hero-tag {
-      padding: 0.35rem 1rem;
-      border-radius: 100px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      font-size: 0.85rem;
-      color: #888;
-      font-weight: 400;
-    }
-
-    .hero-tag.accent {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.15);
-      color: #eee;
-    }
-
-    .hero-cta {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 12px;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-primary {
-      background: #fff;
-      color: #050505;
-      border: none;
-    }
-
-    .btn-primary:hover { background: #ccc; transform: translateY(-1px); }
-
-    .btn-outline {
-      background: transparent;
-      color: #ddd;
-      border: 1px solid #333;
-    }
-
-    .btn-outline:hover { border-color: #fff; color: #fff; transform: translateY(-1px); }
-
-    @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-        gap: 0;
-        padding: 4rem 0 0;
-        min-height: auto;
-      }
-
-      .hero-text {
-        padding: 2rem 1.5rem 1.5rem;
-        text-align: center;
-      }
-
-      .hero-name,
-      .hero-tagline,
-      .hero-cta,
-      .hero-tags {
-        text-align: center;
-        justify-content: center;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-tagline { margin-left: auto; margin-right: auto; }
-
-      .hero-name { font-size: 2.2rem; }
-
-      .hero-photo {
-        min-height: 50vh;
-        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%);
-        order: -1;
-      }
-
-      .hero-photo::before {
-        background: linear-gradient(180deg, rgba(5, 5, 5, 0.1) 0%, rgba(5, 5, 5, 0.5) 70%, rgba(5, 5, 5, 0.95) 100%);
-      }
-    }
-
-    /* ══ About ══ */
-    #about { background: var(--bg-secondary); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-
-    .about-text p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 1rem; }
-    .about-text p strong { color: var(--text); font-weight: 600; }
-    .about-text a { color: #ccc; text-decoration: none; }
-    .about-text a:hover { text-decoration: underline; color: #fff; }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .stat-card {
-      padding: 1.25rem;
-      border-radius: 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-    }
-
-    .stat-card .icon { font-size: 1.5rem; margin-bottom: 0.5rem; filter: grayscale(100%); }
-    .stat-card .number { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem; color: #e0e0e0; }
-    .stat-card .label { font-size: 0.8rem; color: var(--text-muted); }
-
-    @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-    }
-
-    /* ═══════════════════════════════════════════════
-       CAREER TIMELINE — Skill Tree / Progression
-       Shows growth layers, not expired skills.
-       All skills are still active today.
-       ═══════════════════════════════════════════════ */
-    #timeline {
-      position: relative;
-      overflow: hidden;
-    }
-
-    #timeline::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      width: 1px;
-      height: 100%;
-      background: linear-gradient(180deg, transparent, var(--timeline-line) 10%, var(--timeline-line) 90%, transparent);
-      z-index: 0;
-      transform: translateX(-50%);
-    }
-
-    .timeline-subtitle {
-      text-align: center;
-      color: #555;
-      font-size: 0.9rem;
-      margin-top: -2.5rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .timeline-nodes {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .timeline-node {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    /* Left side — year + skills accumulated */
-    .timeline-node-left {
-      text-align: right;
-      padding: 1.5rem 0;
-    }
-
-    .timeline-year {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #222;
-      line-height: 1;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s;
-    }
-
-    .timeline-node:hover .timeline-year {
-      color: #fff;
-    }
-
-    .timeline-year-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #555;
-      margin-bottom: 0.75rem;
-    }
-
-    .timeline-skills-gained {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      justify-content: flex-end;
-    }
-
-    .timeline-skill-tag {
-      padding: 0.2rem 0.6rem;
-      border-radius: 6px;
-      font-size: 0.7rem;
-      font-weight: 500;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid #1e1e1e;
-      color: #666;
-      transition: all 0.2s;
-    }
-
-    .timeline-node:hover .timeline-skill-tag {
-      border-color: #2a2a2a;
-      color: #999;
-    }
-
-    /* Center — dot connector */
-    .timeline-node-center {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      padding: 1rem 0;
-    }
-
-    .timeline-dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: var(--timeline-dot);
-      border: 2px solid #2a2a2a;
-      position: relative;
-      z-index: 2;
-      transition: all 0.3s;
-    }
-
-    .timeline-dot.active {
-      background: #fff;
-      border-color: #fff;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-    }
-
-    .timeline-node:hover .timeline-dot:not(.active) {
-      background: #444;
-      border-color: #555;
-    }
-
-    /* Right side — card */
-    .timeline-node-right {
-      padding: 1.5rem 0;
-    }
-
-    .timeline-card {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .timeline-node:hover .timeline-card {
-      border-color: #2e2e2e;
-      transform: translateX(4px);
-    }
-
-    .timeline-role {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #e0e0e0;
-      margin-bottom: 0.15rem;
-    }
-
-    .timeline-company {
-      font-size: 0.8rem;
-      color: #888;
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-desc {
-      font-size: 0.8rem;
-      color: #555;
-      line-height: 1.5;
-    }
-
-    /* Today indicator */
-    .timeline-today {
-      text-align: center;
-      margin-top: 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .timeline-today-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 1.2rem;
-      border-radius: 100px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid #1e1e1e;
-      font-size: 0.8rem;
-      color: #888;
-    }
-
-    .timeline-today-badge .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #fff;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-
-    /* Skill accumulation bar at top of timeline */
-    .timeline-all-skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      justify-content: center;
-      margin-bottom: 3rem;
-      padding: 1.5rem;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.015);
-      border: 1px solid #181818;
-    }
-
-    .timeline-all-skills-label {
-      width: 100%;
-      text-align: center;
-      font-size: 0.7rem;
-      color: #444;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-all-skill {
-      padding: 0.35rem 1rem;
-      border-radius: 100px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid #222;
-      font-size: 0.8rem;
-      color: #aaa;
-      font-weight: 500;
-    }
-
-    @media (max-width: 900px) {
-      #timeline::before { left: 24px; }
-      
-      .timeline-node {
-        grid-template-columns: 28px 1fr;
-        gap: 0 1rem;
-      }
-
-      .timeline-node-left {
-        display: contents;
-      }
-
-      .timeline-year {
-        font-size: 1.2rem;
-        position: absolute;
-        left: 44px;
-        top: -0.5rem;
-      }
-
-      .timeline-year-label { display: none; }
-      .timeline-skills-gained { display: none; }
-
-      .timeline-node-center {
-        grid-column: 1;
-        padding: 0;
-        justify-content: flex-start;
-      }
-
-      .timeline-dot {
-        width: 12px;
-        height: 12px;
-      }
-
-      .timeline-node-right {
-        grid-column: 2;
-        padding: 0.5rem 0;
-      }
-
-      .timeline-card {
-        padding: 1rem 1.25rem;
-        border-color: #1a1a1a;
-      }
-
-      .timeline-node:hover .timeline-card {
-        transform: translateX(2px);
-      }
-
-      .timeline-all-skills { display: none; }
-    }
-
-    /* ══ What I Do ══ */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-
-    .service-card {
-      padding: 1.75rem;
-      border-radius: 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .service-card:hover { border-color: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
-
-    .service-card .icon { font-size: 2rem; margin-bottom: 1rem; filter: grayscale(100%); }
-    .service-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #e8e8e8; }
-    .service-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
-
-    /* ══ Portfolio ══ */
-    #portfolio { background: var(--bg-secondary); }
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .portfolio-card {
-      border-radius: 16px;
-      overflow: hidden;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .portfolio-card:hover { border-color: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
-
-    .portfolio-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(200, 200, 200, 0.02));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      filter: grayscale(100%);
-      overflow: hidden;
-    }
-
-    .portfolio-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%);
-    }
-
-    .portfolio-info { padding: 1.5rem; }
-
-    .portfolio-info .tag {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      background: rgba(255, 255, 255, 0.06);
-      color: #bbb;
-      margin-bottom: 0.5rem;
-    }
-
-    .portfolio-info h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.35rem; color: #e8e8e8; }
-    .portfolio-info p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --bg:#faf7f2;
+      --bg-alt:#f2efe8;
+      --text:#1a1a1a;
+      --text-muted:#88847a;
+      --text-dim:#b8b4aa;
+      --accent:#1a1a1a;
+      --accent-light:#c8c4ba;
+      --border:#e0dcd2;
+      --line:#d4d0c4;
+      --ink:#1a1a1a;
+      --photo-frame:#fff;
+      --badge-bg:#dfdbd1;
+      --card-bg:#fff;
+      --card-border:#e0dcd2;
+      --max-width:1200px;
+      --serif:'Noto Serif',Georgia,serif;
+      --sans:'Inter',-apple-system,sans-serif
+    }
+
+    html{font-size:16px;scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    body{
+      font-family:var(--sans);
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6
+    }
+
+    /* ══ Storyboard frame ══ */
+    .storyboard-frame{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:0 1.5rem
+    }
+
+    /* ══ Nav — minimal, inline ══ */
+    nav{
+      padding:1.5rem 0;
+      border-bottom:1px solid var(--border);
+      margin-bottom:0
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between
+    }
+    .nav-logo{
+      font-family:var(--serif);
+      font-size:0.9rem;
+      font-weight:700;
+      color:var(--text);
+      text-decoration:none;
+      letter-spacing:0.02em
+    }
+    .nav-links{display:flex;gap:1.5rem;list-style:none}
+    .nav-links a{
+      color:var(--text-muted);
+      text-decoration:none;
+      font-size:0.8rem;
+      font-weight:500;
+      transition:color 0.2s
+    }
+    .nav-links a:hover{color:var(--text)}
+    .nav-mobile-toggle{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:4px}
+    .nav-mobile-toggle span{display:block;width:22px;height:1.5px;background:var(--text-muted);border-radius:1px}
+
+    /* ══ Hero — diagonal split (paper palette) ══ */
+    #hero{
+      min-height:85vh;
+      display:flex;align-items:center;
+      overflow:hidden;
+      position:relative;
+      background:var(--bg)
+    }
+    .hero-inner{
+      width:100%;
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:0;
+      min-height:85vh;
+      align-items:center
+    }
+    .hero-photo{
+      position:relative;
+      height:100%;min-height:70vh;
+      clip-path:polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+      overflow:hidden
+    }
+    .hero-photo::before{
+      content:'';
+      position:absolute;inset:0;
+      background:linear-gradient(135deg, rgba(250,247,242,0.7) 0%, rgba(250,247,242,0) 50%);
+      z-index:2;pointer-events:none
+    }
+    .hero-photo img{
+      position:absolute;inset:0;
+      width:100%;height:100%;
+      object-fit:cover;object-position:50% 25%;
+      filter:grayscale(100%) contrast(1.05);
+      display:block
+    }
+    .hero-text{
+      position:relative;z-index:3;
+      padding:3rem 3rem 3rem 0
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:0.5rem;
+      padding:0.35rem 1rem;
+      background:var(--badge-bg);
+      font-size:0.7rem;font-weight:600;
+      color:var(--text);letter-spacing:0.05em;
+      text-transform:uppercase;margin-bottom:1.5rem
+    }
+    .hero-badge .dot{
+      width:7px;height:7px;border-radius:50%;
+      background:var(--ink);
+      animation:pulse-dot 2s ease-in-out infinite
+    }
+    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.85)}}
+
+    .hero-text h1{
+      font-family:var(--serif);
+      font-size:3.2rem;font-weight:700;
+      line-height:1.1;letter-spacing:-0.02em;
+      margin-bottom:0.5rem;
+      text-align:left
+    }
+    .hero-text h1 .highlight{font-style:italic;font-weight:400;color:var(--text-muted)}
+    .hero-tagline{
+      font-size:1rem;
+      color:var(--text-muted);
+      line-height:1.6;
+      margin:0 0 1.5rem;
+      max-width:460px;
+      text-align:left
+    }
+    .hero-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:2rem}
+    .hero-tag{
+      padding:0.2rem 0.7rem;
+      background:var(--badge-bg);
+      font-size:0.7rem;color:var(--text);font-weight:500
+    }
+    .hero-cta{display:flex;gap:0.75rem;flex-wrap:wrap}
+    .hero-scene-label{
+      position:absolute;
+      bottom:1rem;right:1.5rem;
+      font-size:0.6rem;font-weight:600;
+      letter-spacing:0.15em;color:var(--text-dim);
+      text-transform:uppercase;
+      background:var(--bg);padding:0.15rem 0.5rem
+    }
+
+    @media(max-width:900px){
+      .hero-scene-label{right:0.5rem}
+
+      .hero-inner{grid-template-columns:1fr;gap:0;min-height:auto}
+      .hero-text{padding:2.5rem 1.5rem;text-align:center}
+      .hero-text h1,.hero-tagline,.hero-cta,.hero-tags{text-align:center;justify-content:center;margin-left:auto;margin-right:auto}
+      .hero-text h1{font-size:2.4rem}
+      .hero-photo{min-height:45vh;clip-path:polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%);order:-1}
+      .hero-photo::before{background:linear-gradient(180deg, rgba(250,247,242,0.1), rgba(250,247,242,0.5) 70%, rgba(250,247,242,0.95))}
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;gap:0.4rem;
+      padding:0.6rem 1.2rem;
+      font-family:var(--sans);
+      font-size:0.8rem;font-weight:600;
+      text-decoration:none;cursor:pointer;
+      transition:all 0.2s
+    }
+    .btn-primary{
+      background:var(--ink);color:var(--bg);border:none
+    }
+    .btn-primary:hover{opacity:0.85}
+    .btn-outline{
+      background:transparent;color:var(--text);
+      border:1px solid var(--text-muted)
+    }
+    .btn-outline:hover{border-color:var(--ink)}
+
+    /* ══ Section base — storyboard panels ══ */
+    .scene-panel{
+      padding:4rem 0;
+      border-bottom:1px solid var(--border);
+      position:relative
+    }
+    .scene-panel:last-of-type{border-bottom:2px solid var(--ink)}
+    .scene-panel.scene-alt{background:var(--bg-alt);margin:0 -9999px;padding:4rem 9999px}
+
+    .scene-label{
+      font-size:0.7rem;
+      font-weight:600;
+      letter-spacing:0.15em;
+      text-transform:uppercase;
+      color:var(--text-dim);
+      margin-bottom:0.5rem
+    }
+    .scene-title{
+      font-family:var(--serif);
+      font-size:1.8rem;
+      font-weight:700;
+      line-height:1.2;
+      margin-bottom:0.75rem
+    }
+    .scene-intro{
+      color:var(--text-muted);
+      font-size:0.9rem;
+      margin-bottom:2rem;
+      max-width:600px
+    }
+
+    /* ══ About — 2 column ══ */
+    .about-grid{
+      display:grid;
+      grid-template-columns:1.3fr 1fr;
+      gap:3rem
+    }
+    .about-text p{
+      color:var(--text-muted);
+      margin-bottom:1rem;
+      font-size:0.9rem
+    }
+    .about-text p strong{color:var(--text);font-weight:600}
+    .about-text a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent-light)}
+
+    .about-stats-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:0.75rem
+    }
+    .stat-card{
+      padding:1rem;
+      background:var(--card-bg);
+      border:1px solid var(--card-border)
+    }
+    .stat-card .num{
+      font-family:var(--serif);
+      font-size:1.3rem;font-weight:700
+    }
+    .stat-card .lbl{font-size:0.75rem;color:var(--text-muted)}
+
+    /* ══ Timeline — full redesign ══ */
+    .timeline-header{
+      margin-bottom:3rem
+    }
+    .timeline-row{
+      display:flex;
+      flex-direction:column;
+      gap:0
+    }
+    .timeline-block{
+      display:grid;
+      grid-template-columns:100px 1fr;
+      gap:2rem;
+      padding:1.5rem 0;
+      border-bottom:1px dashed var(--border);
+      position:relative
+    }
+    .timeline-block:last-child{border-bottom:none}
+    .timeline-block::before{
+      content:'';
+      position:absolute;
+      left:100px;top:0;
+      width:1px;height:100%;
+      background:var(--line)
+    }
+    .timeline-block:first-child::before{top:2.5rem}
+    .timeline-block:last-child::before{height:2.5rem}
+
+    .tl-year{
+      font-family:var(--serif);
+      font-size:0.9rem;
+      font-weight:700;
+      color:var(--ink);
+      padding-top:0.2rem
+    }
+    .tl-year .present{font-weight:400;font-style:italic;font-size:0.7rem;color:var(--text-dim);display:block}
+
+    .tl-content{position:relative;padding-left:1.5rem}
+    .tl-dot{
+      position:absolute;
+      left:-5px;top:0.35rem;
+      width:10px;height:10px;
+      border-radius:50%;
+      background:var(--ink)
+    }
+    .tl-role{
+      font-family:var(--serif);
+      font-size:1rem;
+      font-weight:700;
+      margin-bottom:0.1rem
+    }
+    .tl-company{font-size:0.75rem;color:var(--text-muted);margin-bottom:0.4rem}
+    .tl-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+    .tl-skills{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.5rem}
+    .tl-skill{
+      padding:0.15rem 0.5rem;
+      border-radius:2px;
+      background:var(--badge-bg);
+      font-size:0.65rem;
+      color:var(--text)
+    }
+
+    .tl-today{
+      margin-top:1.5rem;
+      padding:1rem 1.5rem;
+      background:var(--card-bg);
+      border:1px solid var(--ink);
+      font-size:0.8rem;
+      color:var(--text-muted);
+      display:inline-block
+    }
+    .tl-today strong{color:var(--ink)}
+
+    /* ══ Services — grid ══ */
+    .services-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:1px;
+      border:1px solid var(--border)
+    }
+    .service-card{
+      padding:1.5rem;
+      background:var(--card-bg);
+      transition:background 0.2s
+    }
+    .service-card:hover{background:var(--bg)}
+    .service-card .icon{font-size:1.3rem;margin-bottom:0.5rem}
+    .service-card h3{font-size:0.95rem;font-weight:600;margin-bottom:0.3rem}
+    .service-card p{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+
+    /* ══ Portfolio — storyboard frames ══ */
+    .portfolio-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1.5rem
+    }
+    .portfolio-card{
+      border:1px solid var(--card-border);
+      background:var(--card-bg);
+      transition:border-color 0.2s
+    }
+    .portfolio-card:hover{border-color:var(--ink)}
+    .portfolio-thumb{
+      width:100%;
+      aspect-ratio:16/9;
+      background:var(--bg-alt);
+      display:flex;align-items:center;justify-content:center;
+      font-size:2rem;
+      filter:grayscale(100%);
+      border-bottom:1px solid var(--card-border)
+    }
+    .portfolio-info{padding:1rem 1.25rem}
+    .portfolio-info .tag{
+      display:inline-block;
+      padding:0.1rem 0.5rem;
+      background:var(--badge-bg);
+      font-size:0.65rem;
+      font-weight:600;
+      margin-bottom:0.35rem;
+      color:var(--text)
+    }
+    .portfolio-info h3{font-size:0.95rem;font-weight:600;margin-bottom:0.2rem}
+    .portfolio-info p{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+    .portfolio-card.span-2{grid-column:span 2}
+    .portfolio-card.span-2 .portfolio-thumb{aspect-ratio:21/9}
 
     /* ══ Writing ══ */
-    .writing-list { display: flex; flex-direction: column; gap: 1rem; }
-
-    .writing-card {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      text-decoration: none;
-      color: var(--text);
-      transition: border-color 0.2s, transform 0.2s;
+    .writing-list{
+      display:flex;flex-direction:column;gap:0.75rem
     }
-
-    .writing-card:hover { border-color: rgba(255, 255, 255, 0.2); transform: translateX(4px); }
-
-    .writing-card .date { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
-    .writing-card .title { flex: 1; font-weight: 500; }
-    .writing-card .arrow { color: #555; font-size: 1.1rem; }
-
-    .writing-card .medium-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      background: rgba(255, 255, 255, 0.06);
-      color: #bbb;
+    .writing-card{
+      display:flex;align-items:center;gap:1rem;
+      padding:1rem 1.25rem;
+      border:1px solid var(--card-border);
+      background:var(--card-bg);
+      text-decoration:none;color:var(--text);
+      transition:border-color 0.2s
     }
+    .writing-card:hover{border-color:var(--ink)}
+    .writing-card .date{font-size:0.75rem;color:var(--text-dim);white-space:nowrap}
+    .writing-card .title{flex:1;font-weight:500;font-size:0.9rem}
+    .writing-card .arrow{color:var(--text-dim)}
 
     /* ══ Contact ══ */
-    #contact { background: var(--bg-secondary); }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+    .contact-layout{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:2rem
     }
-
-    .contact-info p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1rem; }
-
-    .contact-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
+    .contact-info p{color:var(--text-muted);font-size:0.9rem;margin-bottom:1.5rem}
+    .contact-links{display:flex;flex-direction:column;gap:0.5rem}
+    .contact-link{
+      display:flex;align-items:center;gap:0.6rem;
+      padding:0.6rem 1rem;
+      border:1px solid var(--card-border);
+      background:var(--card-bg);
+      color:var(--text);text-decoration:none;
+      font-size:0.8rem;
+      transition:border-color 0.2s
     }
+    .contact-link:hover{border-color:var(--ink)}
+    .contact-link svg{width:14px;height:14px;color:var(--text-muted);flex-shrink:0}
 
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: #ccc;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: border-color 0.2s;
-      width: 100%;
+    .contact-form{display:flex;flex-direction:column;gap:0.75rem}
+    .contact-form input,.contact-form textarea{
+      padding:0.6rem 1rem;
+      border:1px solid var(--card-border);
+      background:var(--card-bg);
+      font-family:var(--sans);
+      font-size:0.85rem;
+      outline:none;
+      transition:border-color 0.2s
     }
-
-    .contact-link:hover { border-color: #fff; color: #fff; }
-
-    .contact-link svg { width: 18px; height: 18px; flex-shrink: 0; color: #999; }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    .contact-form input:focus,.contact-form textarea:focus{border-color:var(--ink)}
+    .contact-form textarea{min-height:100px;resize:vertical}
+    .contact-form button{
+      padding:0.6rem 1.2rem;
+      border:none;
+      background:var(--ink);
+      color:var(--bg);
+      font-family:var(--sans);
+      font-size:0.8rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:opacity 0.2s;
+      align-self:flex-start
     }
-
-    .contact-form input,
-    .contact-form textarea {
-      padding: 0.8rem 1rem;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .contact-form input:focus,
-    .contact-form textarea:focus { border-color: #666; }
-
-    .contact-form input::placeholder,
-    .contact-form textarea::placeholder { color: #555; }
-
-    .contact-form textarea { min-height: 120px; resize: vertical; }
-
-    .contact-form button {
-      padding: 0.8rem 1.5rem;
-      border-radius: 10px;
-      border: none;
-      background: #fff;
-      color: #050505;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-
-    .contact-form button:hover { opacity: 0.85; transform: translateY(-1px); }
-
-    .contact-form .form-success {
-      display: none;
-      color: #ccc;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 1rem;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 10px;
-      border: 1px solid #333;
-    }
-
-    @media (max-width: 768px) {
-      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-    }
+    .contact-form button:hover{opacity:0.85}
+    .form-success{display:none;color:var(--text-muted);font-size:0.85rem;padding:0.5rem 0}
 
     /* ══ Footer ══ */
-    footer {
-      text-align: center;
-      padding: 3rem 1.5rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.8rem;
-      color: #444;
+    footer{
+      text-align:center;
+      padding:2.5rem 0;
+      font-size:0.75rem;
+      color:var(--text-dim)
     }
+    footer a{color:var(--text-muted);text-decoration:none}
+    footer a:hover{color:var(--text)}
 
-    footer a { color: #555; text-decoration: none; }
-    footer a:hover { color: #aaa; }
+    /* ══ Fade in ══ */
+    .fade-in{opacity:0;transform:translateY(16px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
 
-    /* ══ Mobile nav ══ */
-    @media (max-width: 640px) {
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 64px; left: 0; right: 0;
-        flex-direction: column;
-        gap: 0;
-        background: rgba(5, 5, 5, 0.95);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #181818;
-        padding: 0.5rem 0;
+    /* ══ Admin ══ */
+    .admin-link{
+      position:fixed;bottom:1rem;right:1rem;z-index:99;
+      width:36px;height:36px;
+      border:1px solid var(--card-border);
+      background:var(--card-bg);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--text-dim);text-decoration:none;
+      font-size:0.7rem;opacity:0.5;transition:all 0.2s
+    }
+    .admin-link:hover{opacity:1;border-color:var(--ink);color:var(--text)}
+
+    /* ══ Mobile ══ */
+    @media(max-width:800px){
+      .hero-layout{grid-template-columns:1fr;gap:2rem}
+      .hero-text-col h1{font-size:2.4rem}
+      .hero-photo-col .photo-wrap{max-width:300px}
+      .about-grid{grid-template-columns:1fr;gap:2rem}
+      .timeline-block{grid-template-columns:1fr;gap:0.5rem}
+      .timeline-block::before{display:none}
+      .tl-year{font-size:0.8rem;padding-top:0}
+      .tl-content{padding-left:0}
+      .tl-dot{display:none}
+      .services-grid{grid-template-columns:1fr}
+      .portfolio-grid{grid-template-columns:1fr}
+      .portfolio-card.span-2{grid-column:span 1}
+      .contact-layout{grid-template-columns:1fr;gap:2rem}
+    }
+    @media(max-width:640px){
+      .nav-links{
+        display:none;position:absolute;top:4.5rem;left:0;right:0;
+        flex-direction:column;gap:0;
+        background:var(--bg);border-bottom:1px solid var(--border);
+        padding:0.5rem 0;z-index:100
       }
-
-      .nav-links.open { display: flex; }
-
-      .nav-links a {
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-      }
-
-      .nav-mobile-toggle { display: flex; }
+      .nav-links.open{display:flex}
+      .nav-links a{padding:0.6rem 1.5rem}
+      .nav-mobile-toggle{display:flex}
+      nav{position:relative}
     }
-
-    /* ══ Animations ══ */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ══ Admin link ══ */
-    .admin-link {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      z-index: 99;
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #555;
-      text-decoration: none;
-      font-size: 0.75rem;
-      font-weight: 600;
-      transition: all 0.2s;
-      opacity: 0.4;
-    }
-
-    .admin-link:hover { opacity: 1; border-color: #666; color: #fff; }
   </style>
 </head>
 <body>
+
   <!-- Nav -->
   <nav>
-    <div class="nav-inner">
-      <a href="#" class="nav-logo"><!--CMS:NAV_LOGO-->A<!--/CMS:NAV_LOGO--></a>
-      <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links" id="nav-links">
-        <!--CMS:NAV_LINKS-->
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">What I Do</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#writing">Writing</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <!--/CMS:NAV_LINKS-->
-      </ul>
+    <div class="storyboard-frame">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo"><!--CMS:NAV_LOGO-->Aflacha<!--/CMS:NAV_LOGO--></a>
+        <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+          <!--CMS:NAV_LINKS-->
+          <li><a href="#about">About</a></li>
+          <li><a href="#timeline">Timeline</a></li>
+          <li><a href="#services">What I Do</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#writing">Writing</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <!--/CMS:NAV_LINKS-->
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero — Diagonal Split -->
+  <!-- SCENE 1: Hero — diagonal split -->
   <section id="hero">
     <div class="hero-inner">
       <div class="hero-text">
-        <div class="hero-badge"><span class="hero-badge-dot"></span><!--CMS:HERO_BADGE--> Available for projects<!--/CMS:HERO_BADGE--></div>
-        <h1 class="hero-name"><!--CMS:HERO_NAME--><span class="highlight">Aflacha Imadida</span> Rachmata<!--/CMS:HERO_NAME--></h1>
+        <div class="hero-badge"><span class="dot"></span><!--CMS:HERO_BADGE-->Available for projects<!--/CMS:HERO_BADGE--></div>
+        <h1><!--CMS:HERO_NAME-->Aflacha <span class="highlight">Rachmata</span><!--/CMS:HERO_NAME--></h1>
         <!--CMS:TAGLINE-->
         <p class="hero-tagline">
-          COO &amp; Co-founder at <strong>Artelysium Studios</strong> &mdash; building games, experiences, and teams that ship.
+          COO &amp; Co-founder at Artelysium Studios — building games, experiences, and teams that ship.
         </p>
         <!--/CMS:TAGLINE-->
         <div class="hero-tags">
           <!--CMS:HERO_TAGS-->
-          <span class="hero-tag accent">Game Designer</span>
+          <span class="hero-tag">Game Designer</span>
           <span class="hero-tag">UX/UI Designer</span>
           <span class="hero-tag">Producer</span>
           <span class="hero-tag">Project Manager</span>
@@ -969,18 +550,17 @@
         <!--/CMS:HERO_CTA-->
       </div>
       <div class="hero-photo">
-        <img src="/images/val-pool-night.jpg" alt="Aflacha Rachmata — portfolio photo" loading="eager">
+        <img src="/images/val-pool-night.jpg" alt="Aflacha Rachmata" loading="eager">
       </div>
+      <div class="hero-scene-label">🎬 Scene 1</div>
     </div>
   </section>
 
-  <!-- About -->
-  <section id="about">
-    <div class="section-inner fade-in">
-      <!--CMS:ABOUT_HEADER-->
-      <div class="section-label">About</div>
-      <h2 class="section-title">More than a decade shaping digital experiences.</h2>
-      <!--/CMS:ABOUT_HEADER-->
+
+  <!-- SCENE 2: About -->
+  <section id="about" class="scene-panel scene-alt">
+    <div class="storyboard-frame fade-in">
+      <div class="scene-label"><!--CMS:ABOUT_HEADER-->About<!--/CMS:ABOUT_HEADER--></div>
       <div class="about-grid">
         <div class="about-text">
           <!--CMS:ABOUT_TEXT-->
@@ -990,37 +570,30 @@
           <p>
             I've worn many hats — Lead Game Designer, UX/UI Designer, Producer, Product Lead. What ties it all together? I build things that work, lead teams that trust each other, and ship without the drama.
           </p>
-          <p>
-            I also founded <strong>Kolektif untuk Gamedev Indonesia</strong>, a community for Indonesian game developers to connect and grow. Recognised with a <strong>Dicoding Community Driver Award (2017)</strong> for my contributions to the local dev ecosystem.
-          </p>
           <!--/CMS:ABOUT_TEXT-->
           <!--CMS:EXTRA_BIO-->
           <p>
-            Outside the studio? I write on <a href="https://medium.com/@aflacha" target="_blank">Medium</a>, tinker with side projects, and think deeply about game mechanics, product strategy, and what makes a team click.
+            Founded <strong>Kolektif untuk Gamedev Indonesia</strong>, a community for Indonesian game devs. Recognised with a <strong>Dicoding Community Driver Award (2017)</strong>. I write on <a href="https://medium.com/@aflacha" target="_blank">Medium</a>.
           </p>
           <!--/CMS:EXTRA_BIO-->
         </div>
         <!--CMS:ABOUT_STATS-->
-        <div class="about-stats">
+        <div class="about-stats-grid">
           <div class="stat-card">
-            <div class="icon">🎮</div>
-            <div class="number">10+</div>
-            <div class="label">Years in games &amp; tech</div>
+            <div class="num">10+</div>
+            <div class="lbl">Years in games &amp; tech</div>
           </div>
           <div class="stat-card">
-            <div class="icon">🏢</div>
-            <div class="number">Artelysium</div>
-            <div class="label">Co-founder &amp; COO</div>
+            <div class="num">1</div>
+            <div class="lbl">Studio co-founded</div>
           </div>
           <div class="stat-card">
-            <div class="icon">👥</div>
-            <div class="number">Kolektif</div>
-            <div class="label">Game dev community founder</div>
+            <div class="num">1</div>
+            <div class="lbl">Community founded</div>
           </div>
           <div class="stat-card">
-            <div class="icon">🏆</div>
-            <div class="number">2017</div>
-            <div class="label">Dicoding Community Driver Award</div>
+            <div class="num">2017</div>
+            <div class="lbl">Dicoding Award</div>
           </div>
         </div>
         <!--/CMS:ABOUT_STATS-->
@@ -1028,134 +601,85 @@
     </div>
   </section>
 
-  <!-- Career Timeline — Skill Tree / Progression -->
-  <section id="timeline">
-    <div class="section-inner fade-in">
-      <div class="section-label">Career Timeline</div>
-      <h2 class="section-title">The layers I've built.</h2>
-      <p class="timeline-subtitle">Each milestone added new skills — and I still use all of them today.</p>
+  <!-- SCENE 3: Career Timeline (redesigned, not tacked on) -->
+  <section id="timeline" class="scene-panel">
+    <div class="storyboard-frame fade-in">
+      <div class="scene-label">Career Timeline</div>
+      <h2 class="scene-title">The layers I've built.</h2>
+      <p class="scene-intro">Each milestone added new skills — and I still have them all active today.</p>
 
-      <!-- All active skills banner -->
-      <div class="timeline-all-skills">
-        <div class="timeline-all-skills-label">All active skills</div>
-        <span class="timeline-all-skill">🎲 Game Design</span>
-        <span class="timeline-all-skill">🎨 UX/UI Design</span>
-        <span class="timeline-all-skill">🎬 Production</span>
-        <span class="timeline-all-skill">📋 Project Management</span>
-        <span class="timeline-all-skill">🧠 Product Lead</span>
-        <span class="timeline-all-skill">👥 Leadership</span>
-        <span class="timeline-all-skill">🔧 Front-End Dev</span>
-      </div>
+      <div class="timeline-row">
 
-      <div class="timeline-nodes">
-
-        <!-- Node 2025 -->
-        <div class="timeline-node">
-          <div class="timeline-node-left">
-            <div class="timeline-year">2025</div>
-            <div class="timeline-year-label">Present</div>
-            <div class="timeline-skills-gained">
-              <span class="timeline-skill-tag">+Leadership</span>
-              <span class="timeline-skill-tag">+Strategy</span>
-            </div>
-          </div>
-          <div class="timeline-node-center">
-            <div class="timeline-dot active"></div>
-          </div>
-          <div class="timeline-node-right">
-            <div class="timeline-card">
-              <div class="timeline-role">COO &amp; Co-founder</div>
-              <div class="timeline-company">Artelysium Studios</div>
-              <div class="timeline-desc">Leading operations, production pipelines, and team strategy. Building games, comics, and illustrations at scale.</div>
+        <div class="timeline-block">
+          <div class="tl-year">2025 <span class="present">present</span></div>
+          <div class="tl-content">
+            <div class="tl-dot"></div>
+            <div class="tl-role">COO &amp; Co-founder</div>
+            <div class="tl-company">Artelysium Studios</div>
+            <div class="tl-desc">Leading operations, production pipelines, and team strategy. Building games, comics, and illustrations at scale.</div>
+            <div class="tl-skills">
+              <span class="tl-skill">+Leadership</span>
+              <span class="tl-skill">+Strategy</span>
             </div>
           </div>
         </div>
 
-        <!-- Node 2020 -->
-        <div class="timeline-node">
-          <div class="timeline-node-left">
-            <div class="timeline-year">2020</div>
-            <div class="timeline-year-label">→ Present</div>
-            <div class="timeline-skills-gained">
-              <span class="timeline-skill-tag">+Production</span>
-              <span class="timeline-skill-tag">+Product Lead</span>
-            </div>
-          </div>
-          <div class="timeline-node-center">
-            <div class="timeline-dot"></div>
-          </div>
-          <div class="timeline-node-right">
-            <div class="timeline-card">
-              <div class="timeline-role">Lead Game Designer</div>
-              <div class="timeline-company">Artelysium Studios</div>
-              <div class="timeline-desc">Led game design across multiple titles. Systems design, UX/UI, player experience, and team mentoring.</div>
+        <div class="timeline-block">
+          <div class="tl-year">2020</div>
+          <div class="tl-content">
+            <div class="tl-dot"></div>
+            <div class="tl-role">Lead Game Designer</div>
+            <div class="tl-company">Artelysium Studios</div>
+            <div class="tl-desc">Led game design across multiple titles. Systems design, UX/UI, player experience, and team mentoring.</div>
+            <div class="tl-skills">
+              <span class="tl-skill">+Production</span>
+              <span class="tl-skill">+Product Lead</span>
             </div>
           </div>
         </div>
 
-        <!-- Node 2015 -->
-        <div class="timeline-node">
-          <div class="timeline-node-left">
-            <div class="timeline-year">2015</div>
-            <div class="timeline-year-label">→ Present</div>
-            <div class="timeline-skills-gained">
-              <span class="timeline-skill-tag">+Game Design</span>
-              <span class="timeline-skill-tag">+UX/UI Design</span>
-              <span class="timeline-skill-tag">+Community</span>
-            </div>
-          </div>
-          <div class="timeline-node-center">
-            <div class="timeline-dot"></div>
-          </div>
-          <div class="timeline-node-right">
-            <div class="timeline-card">
-              <div class="timeline-role">Game Designer</div>
-              <div class="timeline-company">Found my calling</div>
-              <div class="timeline-desc">Transitioned from web dev &amp; PM into game design. Founded Kolektif untuk Gamedev Indonesia.</div>
+        <div class="timeline-block">
+          <div class="tl-year">2015</div>
+          <div class="tl-content">
+            <div class="tl-dot"></div>
+            <div class="tl-role">Game Designer</div>
+            <div class="tl-company">Found my calling</div>
+            <div class="tl-desc">Transitioned from web dev &amp; PM into game design. Founded Kolektif untuk Gamedev Indonesia.</div>
+            <div class="tl-skills">
+              <span class="tl-skill">+Game Design</span>
+              <span class="tl-skill">+UX/UI Design</span>
+              <span class="tl-skill">+Community</span>
             </div>
           </div>
         </div>
 
-        <!-- Node 2013 -->
-        <div class="timeline-node">
-          <div class="timeline-node-left">
-            <div class="timeline-year">2013</div>
-            <div class="timeline-year-label">→ Present</div>
-            <div class="timeline-skills-gained">
-              <span class="timeline-skill-tag">+Front-End Dev</span>
-              <span class="timeline-skill-tag">+Project Management</span>
-            </div>
-          </div>
-          <div class="timeline-node-center">
-            <div class="timeline-dot"></div>
-          </div>
-          <div class="timeline-node-right">
-            <div class="timeline-card">
-              <div class="timeline-role">Web Front-End Developer</div>
-              <div class="timeline-company">Where it all began</div>
-              <div class="timeline-desc">Started career as a front-end developer. Built the foundation in UX, code, and project management that still serve me today.</div>
+        <div class="timeline-block">
+          <div class="tl-year">2013</div>
+          <div class="tl-content">
+            <div class="tl-dot"></div>
+            <div class="tl-role">Web Front-End Developer</div>
+            <div class="tl-company">Where it all began</div>
+            <div class="tl-desc">Started career as a front-end developer. Built the foundation in UX, code, and project management that still serve me today.</div>
+            <div class="tl-skills">
+              <span class="tl-skill">+Front-End Dev</span>
+              <span class="tl-skill">+Project Management</span>
             </div>
           </div>
         </div>
 
       </div>
 
-      <!-- Today anchor -->
-      <div class="timeline-today">
-        <div class="timeline-today-badge">
-          <span class="dot"></span> Still using every skill I've gained
-        </div>
+      <div class="tl-today">
+        <strong>Still active:</strong> Game Design · UX/UI Design · Production · Project Management · Product Lead · Leadership · Front-End Dev
       </div>
     </div>
   </section>
 
-  <!-- What I Do -->
-  <section id="services">
-    <div class="section-inner fade-in">
-      <!--CMS:SERVICES_HEADER-->
-      <div class="section-label">What I Do</div>
-      <h2 class="section-title">Building games, products, and teams that deliver.</h2>
-      <!--/CMS:SERVICES_HEADER-->
+  <!-- SCENE 4: What I Do -->
+  <section id="services" class="scene-panel scene-alt">
+    <div class="storyboard-frame fade-in">
+      <div class="scene-label"><!--CMS:SERVICES_HEADER-->What I Do<!--/CMS:SERVICES_HEADER--></div>
+      <h2 class="scene-title">Building games, products, and teams that deliver.</h2>
       <!--CMS:SERVICES_CARDS-->
       <div class="services-grid">
         <div class="service-card">
@@ -1183,16 +707,14 @@
     </div>
   </section>
 
-  <!-- Portfolio -->
-  <section id="portfolio">
-    <div class="section-inner fade-in">
-      <!--CMS:PORTFOLIO_HEADER-->
-      <div class="section-label">Portfolio</div>
-      <h2 class="section-title">Selected work &amp; projects.</h2>
-      <!--/CMS:PORTFOLIO_HEADER-->
+  <!-- SCENE 5: Portfolio -->
+  <section id="portfolio" class="scene-panel">
+    <div class="storyboard-frame fade-in">
+      <div class="scene-label"><!--CMS:PORTFOLIO_HEADER-->Portfolio<!--/CMS:PORTFOLIO_HEADER--></div>
+      <h2 class="scene-title">Selected work &amp; projects.</h2>
       <!--CMS:PORTFOLIO_CARDS-->
       <div class="portfolio-grid">
-        <div class="portfolio-card">
+        <div class="portfolio-card span-2">
           <div class="portfolio-thumb">🎮</div>
           <div class="portfolio-info">
             <span class="tag">Game</span>
@@ -1221,19 +743,16 @@
     </div>
   </section>
 
-  <!-- Writing -->
-  <section id="writing">
-    <div class="section-inner fade-in">
-      <!--CMS:WRITING_HEADER-->
-      <div class="section-label">Writing</div>
-      <h2 class="section-title">Thoughts on games, design, and the industry.</h2>
-      <!--/CMS:WRITING_HEADER-->
+  <!-- SCENE 6: Writing -->
+  <section id="writing" class="scene-panel scene-alt">
+    <div class="storyboard-frame fade-in">
+      <div class="scene-label"><!--CMS:WRITING_HEADER-->Writing<!--/CMS:WRITING_HEADER--></div>
+      <h2 class="scene-title">Thoughts on games, design, and the industry.</h2>
       <div class="writing-list">
         <!--CMS:WRITING_CARD-->
         <a href="https://medium.com/@aflacha" target="_blank" rel="noopener" class="writing-card">
           <span class="date">Latest</span>
           <span class="title">Read my articles on Medium</span>
-          <span class="medium-badge">Medium</span>
           <span class="arrow">→</span>
         </a>
         <!--/CMS:WRITING_CARD-->
@@ -1241,18 +760,16 @@
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <div class="section-inner fade-in">
-      <!--CMS:CONTACT_HEADER-->
-      <div class="section-label">Contact</div>
-      <h2 class="section-title">Let's work together.</h2>
-      <!--/CMS:CONTACT_HEADER-->
-      <div class="contact-grid">
+  <!-- SCENE 7: Contact -->
+  <section id="contact" class="scene-panel">
+    <div class="storyboard-frame fade-in">
+      <div class="scene-label"><!--CMS:CONTACT_HEADER-->Contact<!--/CMS:CONTACT_HEADER--></div>
+      <h2 class="scene-title">Let's work together.</h2>
+      <!--CMS:CONTACT_INTRO-->
+      <p class="scene-intro">Whether you have a project in mind, want to talk games, or just say hi — I'm always open to a good conversation.</p>
+      <!--/CMS:CONTACT_INTRO-->
+      <div class="contact-layout">
         <div class="contact-info">
-          <!--CMS:CONTACT_INTRO-->
-          <p>Whether you have a project in mind, want to talk games, or just say hi — I'm always open to a good conversation.</p>
-          <!--/CMS:CONTACT_INTRO-->
           <div class="contact-links">
             <!--CMS:CONTACT_EMAIL-->
             <a href="mailto:aflacha@artelysium.com" class="contact-link">
@@ -1268,12 +785,12 @@
             <a href="https://github.com/aflacha" target="_blank" rel="noopener" class="contact-link">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
               github.com/aflacha
-            <!--/CMS:CONTACT_LINKS-->
             </a>
             <a href="https://medium.com/@aflacha" target="_blank" rel="noopener" class="contact-link">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 0v24h24V0H0zm19.938 5.686L18.651 6.92a.376.376 0 00-.143.362v9.067a.376.376 0 00.143.361l1.257 1.234v.271h-6.322v-.271l1.302-1.265c.128-.128.128-.165.128-.36V8.99l-3.62 9.195h-.49L6.69 8.99v6.163a.85.85 0 00.233.707l1.694 2.054v.271H3.815v-.271l1.694-2.054a.82.82 0 00.218-.707V8.072a.624.624 0 00-.203-.528L4.019 5.686v-.27h4.674l3.613 7.923 3.176-7.924h4.456v.271z"/></svg>
               medium.com/@aflacha
             </a>
+            <!--/CMS:CONTACT_LINKS-->
           </div>
         </div>
         <form class="contact-form" id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
@@ -1289,46 +806,29 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; <!--CMS:FOOTER_YEAR-->2026<!--/CMS:FOOTER_YEAR--> &middot; <a href="https://aflacha.com"><!--CMS:FOOTER_NAME-->Aflacha Imadida Rachmata<!--/CMS:FOOTER_NAME--></a> &middot; <!--CMS:FOOTER_TEXT-->Built with black and white<!--/CMS:FOOTER_TEXT--></p>
+    <div class="storyboard-frame">
+      <p>&copy; <!--CMS:FOOTER_YEAR-->2026<!--/CMS:FOOTER_YEAR--> &middot; <a href="https://aflacha.com"><!--CMS:FOOTER_NAME-->Aflacha Imadida Rachmata<!--/CMS:FOOTER_NAME--></a> &middot; <!--CMS:FOOTER_TEXT-->Built on paper and ink<!--/CMS:FOOTER_TEXT--></p>
+    </div>
   </footer>
 
-  <!-- Admin link -->
   <a href="/admin/" class="admin-link" title="CMS" target="_blank" rel="noopener">⚙</a>
 
   <script>
-    const toggle = document.getElementById('nav-toggle');
-    const navLinks = document.getElementById('nav-links');
-
-    toggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-      });
+    document.getElementById('nav-toggle')?.addEventListener('click', () => {
+      document.getElementById('nav-links')?.classList.toggle('open');
     });
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
     const form = document.getElementById('contact-form');
-    const successMsg = document.getElementById('form-success');
-
-    form.addEventListener('submit', function(e) {
+    const success = document.getElementById('form-success');
+    form?.addEventListener('submit', function(e) {
       e.preventDefault();
-      form.querySelector('input[name="name"]').style.display = 'none';
-      form.querySelector('input[name="email"]').style.display = 'none';
-      form.querySelector('textarea').style.display = 'none';
-      form.querySelector('button').style.display = 'none';
-      successMsg.style.display = 'block';
+      form.querySelectorAll('input,textarea,button').forEach(el => el.style.display = 'none');
+      success.style.display = 'block';
     });
   </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -1336,9 +836,7 @@
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on('init', function(user) {
         if (!user && window.location.hash.includes('invite_token')) {
-          window.netlifyIdentity.on('login', function() {
-            window.location.href = '/admin/';
-          });
+          window.netlifyIdentity.on('login', function() { window.location.href = '/admin/'; });
         }
       });
     }

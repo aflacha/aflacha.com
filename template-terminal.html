@@ -8,451 +8,616 @@
   <link rel="icon" type="image/svg+xml" href="<!--CMS:FAVICON-->/images/favicon.svg<!--/CMS:FAVICON-->">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-    :root {
-      --bg: #050505;
-      --bg-alt: #080808;
-      --border: #161616;
-      --text: #f0f0f0;
-      --text-muted: #777;
-      --text-dim: #444;
-      --accent: #fff;
-      --max-width: 1350px;
+    :root{
+      --bg:#0a0c0f;
+      --bg-alt:#0d1014;
+      --bg-card:#111418;
+      --border:#1e2329;
+      --border-hover:#2a3140;
+      --text:#d4dbe3;
+      --text-muted:#6c7683;
+      --text-dim:#38404a;
+      --accent:#e8edf5;
+      --cursor:#e8edf5;
+      --term-green:#5ce388;
+      --term-cyan:#64d8ff;
+      --term-yellow:#ffd866;
+      --term-red:#ff6188;
+      --max-width:1100px;
+      --mono:'JetBrains Mono',monospace
     }
 
-    html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
+    html{font-size:15px;scroll-behavior:smooth;}
+    body{
+      font-family:var(--mono);
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.7;
+      font-weight:300
     }
 
-    /* ══ Nav ══ */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(5,5,5,0.9); backdrop-filter: blur(12px);
-      border-bottom: 1px solid #0e0e0e;
+    .term-wrap{max-width:var(--max-width);margin:0 auto;padding:0 1.5rem}
+
+    /* ══ Nav — terminal prompt bar ══ */
+    nav{
+      position:sticky;top:0;z-index:100;
+      background:rgba(10,12,15,0.95);
+      backdrop-filter:blur(6px);
+      border-bottom:1px solid var(--border)
     }
-    .nav-inner {
-      max-width: var(--max-width); margin: 0 auto;
-      padding: 0 1.5rem; display: flex; align-items: center;
-      justify-content: space-between; height: 60px;
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      height:50px
     }
-    .nav-logo { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 1rem; color: #888; text-decoration: none; letter-spacing: 0.05em; }
-
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: #444; text-decoration: none; font-size: 0.8rem; font-weight: 400; font-family: 'JetBrains Mono', monospace; transition: color 0.2s; }
-    .nav-links a:hover { color: #fff; }
-    .nav-mobile-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
-    .nav-mobile-toggle span { display: block; width: 24px; height: 1px; background: #555; border-radius: 1px; }
-    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.85)} }
-
-    /* ══ Hero Scene ══ */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 0 1.5rem;
-      position: relative;
-      overflow: hidden;
-      background: var(--bg);
+    .nav-logo{
+      font-size:0.75rem;font-weight:500;color:var(--term-cyan);
+      text-decoration:none;
+      display:flex;align-items:center;gap:0.5rem
     }
-
-    /* Floating oversized type */
-    .scenes-float {
-      position: absolute;
-      z-index: 0;
-      font-size: 9rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.012);
-      letter-spacing: -0.05em;
-      pointer-events: none;
-      line-height: 1;
-      user-select: none;
+    .nav-logo .prompt{color:var(--term-green);font-weight:400}
+    .nav-logo .path{color:var(--text-dim)}
+    .nav-links{display:flex;gap:0;list-style:none}
+    .nav-links a{
+      display:block;padding:0.4rem 0.75rem;
+      font-size:0.65rem;font-weight:400;
+      color:var(--text-muted);text-decoration:none;
+      transition:all 0.1s;
+      border-radius:0
     }
+    .nav-links a::before{content:'~/';color:var(--text-dim)}
+    .nav-links a:hover{color:var(--text);background:var(--border)}
+    .nav-mobile-toggle{display:none;flex-direction:column;gap:3px;background:none;border:none;cursor:pointer;padding:4px}
+    .nav-mobile-toggle span{display:block;width:18px;height:1px;background:var(--text-muted)}
 
-    .scenes-float.t1 { top: 3%; left: 2%; }
-    .scenes-float.t2 { bottom: 5%; right: 2%; font-size: 7rem; }
-    .scenes-float.t3 { top: 40%; right: 10%; font-size: 4rem; color: rgba(255,255,255,0.008); }
-
-    .hero-scene {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 3rem;
-      position: relative;
-      z-index: 2;
+    /* ══ Section base ══ */
+    .term-section{
+      padding:3.5rem 0;
+      border-bottom:1px solid var(--border);
+      position:relative
     }
+    .term-section:last-of-type{border-bottom:1px solid var(--border-hover)}
 
-    .hero-terminal-hint {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: #333;
-      margin-bottom: 1.5rem;
+    .term-header{
+      margin-bottom:2rem;
+      display:flex;align-items:center;gap:1rem
     }
+    .term-header .line-num{
+      font-size:0.6rem;color:var(--text-dim);
+      min-width:2.5rem;text-align:right;
+      user-select:none
+    }
+    .term-header h2{
+      font-size:0.9rem;
+      font-weight:500;
+      color:var(--term-cyan);
+      letter-spacing:0.01em
+    }
+    .term-header h2 .fn{color:var(--term-yellow)}
+    .term-header h2 .paren{color:var(--text-dim)}
 
-    .hero-terminal-hint .prompt { color: #666; }
-    .hero-terminal-hint .cmd { color: #444; }
-    .hero-terminal-hint .blink { animation: blink 1.2s step-end infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-    .hero-scene-name {
-      font-size: 3.2rem;
-      font-weight: 300;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
+    .term-intro{
+      color:var(--text-muted);
+      font-size:0.8rem;
+      margin:0 0 1.5rem 3.5rem;
+      max-width:500px
     }
 
-    .hero-scene-name strong { font-weight: 800; color: #fff; }
+    /* ══ Hero ══ */
+    #hero{
+      min-height:85vh;
+      display:flex;align-items:center;
+      border-bottom:1px solid var(--border)
+    }
+    .hero-term{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:2rem;
+      align-items:center
+    }
+    .hero-term-left{
+      padding:2rem 0
+    }
+    .hero-prompt{
+      font-size:0.65rem;
+      color:var(--text-dim);
+      margin-bottom:1rem
+    }
+    .hero-prompt .dollar{color:var(--term-green)}
+    .hero-prompt .cmd{color:var(--text-muted)}
+    .hero-prompt .cursor{
+      display:inline-block;width:2px;height:0.9rem;
+      background:var(--cursor);
+      margin-left:2px;
+      animation:blink 1s step-end infinite;
+      vertical-align:middle
+    }
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-    .hero-scene-tagline {
-      font-size: 1.05rem;
-      color: #555;
-      max-width: 480px;
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
+    .hero-term h1{
+      font-size:2.2rem;
+      font-weight:600;
+      line-height:1.1;
+      letter-spacing:-0.02em;
+      margin-bottom:0.75rem;
+      color:var(--accent)
+    }
+    .hero-term h1 .hl{font-weight:300;color:var(--text-muted)}
+
+    .hero-term-desc{
+      font-size:0.8rem;
+      color:var(--text-muted);
+      margin-bottom:0.75rem;
+      line-height:1.6
     }
 
-    .hero-scene-tags {
-      display: flex; flex-wrap: wrap; gap: 0.35rem;
-      margin-bottom: 2rem;
+    .hero-tags{
+      display:flex;flex-wrap:wrap;gap:0.25rem;
+      margin-bottom:1.5rem
+    }
+    .hero-tag{
+      padding:0.15rem 0.5rem;
+      font-size:0.6rem;
+      color:var(--text-muted);
+      border:1px solid var(--border);
+      transition:all 0.1s
+    }
+    .hero-tag:hover{border-color:var(--border-hover);color:var(--text)}
+
+    .hero-term-right{
+      display:flex;justify-content:center
     }
 
-    .hero-scene-tag {
-      padding: 0.2rem 0.7rem;
-      border-radius: 3px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      color: #555;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid #161616;
+    /* ASCII frame around photo */
+    .ascii-frame{
+      position:relative;
+      width:100%;max-width:340px
+    }
+    .ascii-frame .corners{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      border:1px solid var(--border)
+    }
+    .ascii-frame .corners::before{
+      content:'[ SCAN ]';
+      position:absolute;
+      top:-0.6rem;left:50%;
+      transform:translateX(-50%);
+      background:var(--bg);
+      padding:0 0.5rem;
+      font-size:0.55rem;
+      color:var(--text-dim);
+      letter-spacing:0.2em
+    }
+    .ascii-frame img{
+      width:100%;height:auto;
+      aspect-ratio:3/4;
+      object-fit:cover;object-position:50% 20%;
+      filter:grayscale(100%) contrast(0.9) brightness(0.8);
+      display:block;
+      margin:1px
     }
 
-    /* Photo on the right — floating */
-    .hero-photo-scene {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .btn{
+      display:inline-flex;align-items:center;gap:0.35rem;
+      padding:0.45rem 1rem;
+      font-family:var(--mono);font-size:0.7rem;font-weight:500;
+      text-decoration:none;transition:all 0.1s
+    }
+    .btn-primary{
+      background:var(--accent);color:var(--bg);border:none
+    }
+    .btn-primary:hover{opacity:0.85}
+    .btn-outline{
+      background:transparent;color:var(--text-muted);
+      border:1px solid var(--border)
+    }
+    .btn-outline:hover{border-color:var(--text);color:var(--text)}
+
+    /* ══ About — comment block ══ */
+    .about-comment{
+      padding:1rem 3.5rem;margin-bottom:1.5rem
+    }
+    .about-comment .comment-line{
+      display:block;
+      font-size:0.7rem;color:var(--text-dim);
+      margin-bottom:0.25rem
+    }
+    .about-comment .comment-line::before{content:'# ';color:var(--text-dim)}
+    .about-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:2rem;
+      margin-left:3.5rem
+    }
+    .about-text p{
+      font-size:0.75rem;
+      color:var(--text-muted);
+      margin-bottom:0.6rem;
+      line-height:1.6
+    }
+    .about-text p strong{color:var(--text);font-weight:600}
+    .about-text a{color:var(--term-cyan);text-decoration:none}
+    .about-text a:hover{text-decoration:underline}
+
+    .term-stats{
+      display:grid;grid-template-columns:1fr 1fr;gap:0.5rem
+    }
+    .term-stat{
+      padding:0.6rem;
+      border:1px solid var(--border);
+      background:var(--bg-alt)
+    }
+    .term-stat .n{
+      font-size:0.9rem;font-weight:600;color:var(--term-yellow)
+    }
+    .term-stat .l{
+      font-size:0.6rem;color:var(--text-muted);
+      margin-top:0.15rem
     }
 
-    .hero-photo-scene img {
-      width: 100%;
-      max-width: 460px;
-      height: auto;
-      aspect-ratio: 3/4;
-      object-fit: cover;
-      object-position: 50% 25%;
-      filter: grayscale(100%) contrast(1.1);
-      border-radius: 0;
-      position: relative;
-      z-index: 1;
+    /* ══ Timeline — code style ══ */
+    .timeline-code{margin-left:3.5rem}
+    .tl-line{
+      display:grid;
+      grid-template-columns:80px 1fr;
+      gap:1.5rem;
+      padding:0.6rem 0;
+      border-bottom:1px dashed var(--border);
+      font-size:0.7rem
+    }
+    .tl-line:last-child{border-bottom:none}
+    .tl-year{color:var(--term-green);font-weight:500}
+    .tl-info{}
+    .tl-role{color:var(--accent);font-weight:500}
+    .tl-company{color:var(--text-muted);margin-top:0.1rem}
+    .tl-desc{color:var(--text-dim);margin-top:0.2rem;line-height:1.5}
+    .tl-skills{display:flex;flex-wrap:wrap;gap:0.2rem;margin-top:0.3rem}
+    .tl-skill{
+      padding:0.05rem 0.4rem;
+      font-size:0.55rem;
+      color:var(--term-yellow);
+      border:1px solid var(--border);
+      background:rgba(255,216,102,0.03)
     }
 
-    /* Photo frame — decorative offset */
-    .hero-photo-scene .frame-layer {
-      position: absolute;
-      top: 12px; left: -12px;
-      width: 100%;
-      max-width: 460px;
-      aspect-ratio: 3/4;
-      border: 1px solid rgba(255,255,255,0.03);
-      pointer-events: none;
+    .tl-today{
+      margin:1rem 0 0 3.5rem;
+      padding:0.6rem 1rem;
+      border:1px solid var(--border);
+      font-size:0.65rem;
+      color:var(--term-green)
+    }
+    .tl-today strong{color:var(--accent);font-weight:600}
+
+    /* ══ Services — grep output ══ */
+    .services-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      margin-left:3.5rem;
+      gap:0.75rem
+    }
+    .service-card{
+      padding:0.75rem 1rem;
+      border:1px solid var(--border);
+      background:var(--bg-alt);
+      transition:border-color 0.1s
+    }
+    .service-card:hover{border-color:var(--border-hover)}
+    .service-card .icon{font-size:0.85rem;margin-bottom:0.35rem}
+    .service-card h3{
+      font-size:0.75rem;font-weight:600;color:var(--term-cyan);
+      margin-bottom:0.25rem
+    }
+    .service-card p{
+      font-size:0.65rem;color:var(--text-dim);line-height:1.5
     }
 
-    .hero-photo-scene .frame-layer-2 {
-      position: absolute;
-      top: 24px; left: -24px;
-      width: 100%;
-      max-width: 460px;
-      aspect-ratio: 3/4;
-      border: 1px solid rgba(255,255,255,0.015);
-      pointer-events: none;
+    /* ══ Portfolio — ls output ══ */
+    .portfolio-ls{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      margin-left:3.5rem;
+      gap:0.5rem
+    }
+    .portfolio-item{
+      padding:1rem;
+      border:1px solid var(--border);
+      background:var(--bg-alt)
+    }
+    .portfolio-item .file-info{
+      font-size:0.6rem;color:var(--text-dim);margin-bottom:0.3rem
+    }
+    .portfolio-item .file-info .perm{color:var(--term-green)}
+    .portfolio-item .file-info .size{color:var(--term-yellow)}
+    .portfolio-item h3{
+      font-size:0.75rem;font-weight:600;color:var(--accent);
+      margin-bottom:0.2rem
+    }
+    .portfolio-item h3::before{content:'> ';color:var(--term-green)}
+    .portfolio-item p{
+      font-size:0.6rem;color:var(--text-muted);line-height:1.5
+    }
+    .portfolio-item .tag{
+      display:inline-block;
+      padding:0.05rem 0.4rem;
+      font-size:0.55rem;
+      color:var(--term-cyan);
+      border:1px solid var(--border);
+      margin-bottom:0.3rem
     }
 
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.7rem 1.4rem; border-radius: 6px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem; font-weight: 500;
-      text-decoration: none; cursor: pointer; transition: all 0.2s;
+    /* ══ Writing ══ */
+    .writing-symbolic{
+      margin-left:3.5rem
     }
-
-    .btn-primary { background: #fff; color: #050505; border: none; letter-spacing: 0.02em; }
-    .btn-primary:hover { background: #ddd; }
-
-    .btn-outline { background: transparent; color: #888; border: 1px solid #222; }
-    .btn-outline:hover { border-color: #fff; color: #fff; }
-
-    /* ══ Command palette hint ══ */
-    .cmd-hint {
-      position: fixed; top: 1rem; right: 1.5rem; z-index: 101;
-      padding: 0.3rem 0.8rem; border-radius: 6px;
-      background: rgba(255,255,255,0.015); border: 1px solid #141414;
-      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: #333;
+    .writing-symbolic a{
+      display:inline-flex;align-items:center;gap:0.5rem;
+      font-size:0.75rem;color:var(--term-yellow);text-decoration:none;
+      padding:0.5rem 1rem;
+      border:1px solid var(--border);
+      transition:border-color 0.1s
     }
-    .cmd-hint kbd {
-      display: inline-block; padding: 0.1rem 0.3rem;
-      background: #0a0a0a; border-radius: 3px; border: 1px solid #181818;
-      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: #555;
+    .writing-symbolic a:hover{border-color:var(--border-hover);color:var(--accent)}
+    .writing-symbolic .ln{color:var(--text-dim);font-size:0.6rem}
+    .writing-symbolic .ln::before{content:'ln '}
+
+    /* ══ Contact ══ */
+    .contact-block{
+      margin-left:3.5rem;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1.5rem
     }
-
-    /* ══ Section scenes ══ */
-    .scene-section {
-      min-height: 70vh;
-      padding: 5rem 1.5rem;
-      display: flex;
-      align-items: center;
-      border-top: 1px solid #0e0e0e;
+    .contact-links{
+      display:flex;flex-direction:column;gap:0.4rem
     }
-
-    .scene-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      width: 100%;
+    .contact-links a{
+      display:flex;align-items:center;gap:0.5rem;
+      padding:0.4rem 0.75rem;
+      font-size:0.65rem;color:var(--text-muted);text-decoration:none;
+      border:1px solid var(--border);
+      transition:all 0.1s
     }
+    .contact-links a:hover{border-color:var(--border-hover);color:var(--text)}
+    .contact-links svg{width:12px;height:12px;color:var(--text-dim)}
 
-    .scene-inner h2 {
-      font-size: 2rem;
-      font-weight: 300;
-      letter-spacing: -0.02em;
-      margin-bottom: 2.5rem;
+    .term-form input,.term-form textarea{
+      width:100%;padding:0.4rem 0.65rem;margin-bottom:0.35rem;
+      border:1px solid var(--border);background:var(--bg);
+      color:var(--text);font-family:var(--mono);
+      font-size:0.65rem;outline:none
     }
+    .term-form input:focus,.term-form textarea:focus{border-color:var(--border-hover)}
+    .term-form textarea{min-height:50px;resize:vertical}
+    .term-form-success{display:none;color:var(--term-green);font-size:0.65rem;padding:0.25rem 0}
 
-    .scene-inner h2 strong { font-weight: 700; color: #fff; }
-
-    .scene-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      color: #333;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin-bottom: 0.75rem;
+    /* ══ Footer ══ */
+    footer{
+      text-align:center;padding:2rem;
+      font-size:0.6rem;color:var(--text-dim)
     }
+    footer a{color:var(--text-muted);text-decoration:none}
+    footer a:hover{color:var(--text)}
 
-    .scene-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1px;
-      background: #0e0e0e;
+    .admin-link{
+      position:fixed;bottom:1rem;right:1rem;z-index:99;
+      width:28px;height:28px;
+      border:1px solid var(--border);background:var(--bg-alt);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--text-dim);text-decoration:none;
+      font-size:0.55rem;opacity:0.3;transition:all 0.1s
     }
+    .admin-link:hover{opacity:1;border-color:var(--text)}
 
-    .scene-card {
-      background: #080808;
-      padding: 1.75rem;
-    }
-
-    .scene-card .icon { font-size: 1.5rem; margin-bottom: 0.75rem; filter: grayscale(100%); }
-    .scene-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; color: #d0d0d0; }
-    .scene-card p { font-size: 0.8rem; color: #555; line-height: 1.6; }
-
-    .scene-text p { font-size: 0.9rem; color: #666; margin-bottom: 0.75rem; }
-    .scene-text p strong { color: #ccc; font-weight: 500; }
-
-    .scene-text-2col {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
-    }
-
-    .contact-inline { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .contact-inline a {
-      padding: 0.4rem 0.8rem; border-radius: 4px;
-      border: 1px solid #161616; color: #555;
-      text-decoration: none; font-size: 0.75rem;
-      font-family: 'JetBrains Mono', monospace;
-      transition: all 0.2s;
-    }
-    .contact-inline a:hover { border-color: #333; color: #bbb; }
-
-    .scene-writing a {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem; color: #555; text-decoration: none;
-      padding: 0.5rem 1rem; border-radius: 4px;
-      border: 1px solid #161616; transition: all 0.2s;
-    }
-    .scene-writing a:hover { border-color: #333; color: #bbb; }
-
-    footer {
-      text-align: center; padding: 2.5rem 1.5rem;
-      border-top: 1px solid #0e0e0e;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem; color: #222;
-    }
-    footer a { color: #333; text-decoration: none; }
-    footer a:hover { color: #666; }
-
-    /* Mobile */
-    @media (max-width: 900px) {
-      .hero-scene { grid-template-columns: 1fr; gap: 2rem; }
-      .hero-scene-name { font-size: 2.4rem; }
-      .hero-photo-scene img { max-width: 320px; }
-      .hero-photo-scene .frame-layer { max-width: 320px; }
-      .hero-photo-scene .frame-layer-2 { max-width: 320px; }
-      .scenes-float { display: none; }
-      .cmd-hint { display: none; }
-      .scene-text-2col { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 640px) {
-      .nav-links {
-        display: none; position: absolute; top: 60px; left: 0; right: 0;
-        flex-direction: column; gap: 0;
-        background: rgba(5,5,5,0.95); backdrop-filter: blur(12px);
-        border-bottom: 1px solid #0e0e0e; padding: 0.5rem 0;
+    /* ══ Mobile ══ */
+    @media(max-width:800px){
+      .hero-term{grid-template-columns:1fr;gap:1rem}
+      .hero-term h1{font-size:1.6rem}
+      .ascii-frame{max-width:260px}
+      .about-grid{grid-template-columns:1fr}
+      .services-grid{grid-template-columns:1fr}
+      .portfolio-ls{grid-template-columns:1fr}
+      .contact-block{grid-template-columns:1fr}
+      .term-header,.term-intro,.about-comment,.about-grid,
+      .timeline-code,.tl-today,.services-grid,
+      .portfolio-ls,.writing-symbolic,.contact-block{
+        margin-left:0
       }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 0.75rem 1.5rem; font-family: 'Inter', sans-serif; }
-      .nav-mobile-toggle { display: flex; }
     }
-
-    .admin-link {
-      position: fixed; bottom: 1rem; right: 1rem; z-index: 99;
-      width: 36px; height: 36px; border-radius: 6px;
-      background: transparent; border: 1px solid #141414;
-      display: flex; align-items: center; justify-content: center;
-      color: #333; text-decoration: none; font-size: 0.7rem;
-      opacity: 0.3; transition: all 0.2s;
+    @media(max-width:640px){
+      .nav-links{
+        display:none;position:absolute;top:50px;left:0;right:0;
+        flex-direction:column;gap:1px;
+        background:rgba(10,12,15,0.98);border-bottom:1px solid var(--border);
+        padding:0.25rem;z-index:100
+      }
+      .nav-links.open{display:flex}
+      .nav-mobile-toggle{display:flex}
     }
-    .admin-link:hover { opacity: 1; border-color: #444; color: #aaa; }
   </style>
 </head>
 <body>
-  <div class="cmd-hint"><kbd>⌘K</kbd> jump to...</div>
-  <div class="scenes-float t1">GAMES</div>
-  <div class="scenes-float t2">DESIGN</div>
-  <div class="scenes-float t3">PRODUCT</div>
 
   <!-- Nav -->
   <nav>
-    <div class="nav-inner">
-      <a href="#" class="nav-logo"><!--CMS:NAV_LOGO-->~/aflacha<!--/CMS:NAV_LOGO--></a>
-      <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links" id="nav-links">
-        <!--CMS:NAV_LINKS-->
-        <li><a href="#services">/services</a></li>
-        <li><a href="#portfolio">/portfolio</a></li>
-        <li><a href="#writing">/writing</a></li>
-        <li><a href="#contact">/contact</a></li>
-        <!--/CMS:NAV_LINKS-->
-      </ul>
+    <div class="term-wrap">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo"><span class="prompt">$</span> <span class="path"><!--CMS:NAV_LOGO-->~/aflacha<!--/CMS:NAV_LOGO--></span></a>
+        <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+          <!--CMS:NAV_LINKS-->
+          <li><a href="#about">about</a></li>
+          <li><a href="#timeline">timeline</a></li>
+          <li><a href="#services">services</a></li>
+          <li><a href="#portfolio">portfolio</a></li>
+          <li><a href="#writing">writing</a></li>
+          <li><a href="#contact">contact</a></li>
+          <!--/CMS:NAV_LINKS-->
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero Scene -->
+  <!-- Hero -->
   <section id="hero">
-    <div class="hero-scene">
-      <div>
-        <p class="hero-terminal-hint"><span class="prompt">$</span> <span class="cmd">whoami</span> <span class="blink">▌</span></p>
-    <div style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.25rem 0.7rem;border-radius:100px;background:rgba(255,255,255,0.02);border:1px solid #141414;font-size:0.65rem;color:#555;font-family:'JetBrains Mono',monospace;margin-bottom:1rem;width:fit-content;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse-dot 2s ease-in-out infinite;"></span><!--CMS:HERO_BADGE-->Available<!--/CMS:HERO_BADGE--></div>
-        <h1 class="hero-scene-name"><!--CMS:HERO_NAME-->Aflacha <strong>Rachmata</strong><!--/CMS:HERO_NAME--></h1>
-        <!--CMS:TAGLINE-->
-        <p class="hero-scene-tagline">COO &amp; Co-founder at Artelysium Studios — building games, experiences, and teams that ship.</p>
-        <!--/CMS:TAGLINE-->
-        <div class="hero-scene-tags">
-          <!--CMS:HERO_TAGS-->
-          <span class="hero-scene-tag">game-design</span>
-          <span class="hero-scene-tag">ux-ui</span>
-          <span class="hero-scene-tag">production</span>
-          <span class="hero-scene-tag">project-management</span>
-          <span class="hero-scene-tag">product-lead</span>
-          <!--/CMS:HERO_TAGS-->
+    <div class="term-wrap">
+      <div class="hero-term">
+        <div class="hero-term-left">
+          <p class="hero-prompt">
+            <span class="dollar">$</span> <span class="cmd">whoami</span><span class="cursor"></span>
+          </p>
+          <h1><!--CMS:HERO_NAME-->Aflacha <span class="hl">Rachmata</span><!--/CMS:HERO_NAME--></h1>
+          <!--CMS:TAGLINE-->
+          <p class="hero-term-desc">
+            COO &amp; Co-founder @ Artelysium Studios — building games, experiences, and teams that ship.
+          </p>
+          <!--/CMS:TAGLINE-->
+          <div class="hero-tags">
+            <!--CMS:HERO_TAGS-->
+            <span class="hero-tag">game_design</span>
+            <span class="hero-tag">ux_ui</span>
+            <span class="hero-tag">production</span>
+            <span class="hero-tag">project_mgmt</span>
+            <span class="hero-tag">product_lead</span>
+            <!--/CMS:HERO_TAGS-->
+          </div>
+          <!--CMS:HERO_CTA-->
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <a href="#portfolio" class="btn btn-primary">ls ./work</a>
+            <a href="#contact" class="btn btn-outline">mailto</a>
+          </div>
+          <!--/CMS:HERO_CTA-->
         </div>
-        <!--CMS:HERO_CTA-->
-        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-          <a href="#portfolio" class="btn btn-primary">See my work</a>
-          <a href="#contact" class="btn btn-outline">Get in touch</a>
+        <div class="hero-term-right">
+          <div class="ascii-frame">
+            <div class="corners"></div>
+            <img src="/images/val-pool-night.jpg" alt="Aflacha Rachmata" loading="eager">
+          </div>
         </div>
-        <!--/CMS:HERO_CTA-->
-      </div>
-      <div class="hero-photo-scene">
-        <div class="frame-layer-2"></div>
-        <div class="frame-layer"></div>
-        <img src="/images/val-pool-night.jpg" alt="Aflacha Rachmata">
       </div>
     </div>
   </section>
 
-  <!-- About Scene -->
-  <section id="about" class="scene-section" style="background:var(--bg-alt);">
-    <div class="scene-inner">
-      <div class="scene-label">01 — About</div>
-      <!--CMS:ABOUT_HEADER-->
-      <h2>More than a decade shaping <strong>digital experiences</strong>.</h2>
-      <!--/CMS:ABOUT_HEADER-->
-      <div class="scene-text-2col">
-        <div class="scene-text">
+  <!-- About -->
+  <section id="about" class="term-section" style="background:var(--bg-alt)">
+    <div class="term-wrap">
+      <div class="term-header">
+        <span class="line-num">01</span>
+        <h2><span class="fn">about</span><span class="paren">()</span></h2>
+      </div>
+      <div class="about-comment">
+        <span class="comment-line">More than a decade shaping digital experiences</span>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
           <!--CMS:ABOUT_TEXT-->
           <p>Started as a <strong>web front-end developer</strong> in 2013, moved through <strong>project management</strong> and <strong>freelance</strong>, then found my true calling in <strong>game design</strong> in late 2015. Today I'm <strong>COO &amp; Co-founder of Artelysium Studios</strong>.</p>
-          <p>I've worn many hats — Lead Game Designer, UX/UI Designer, Producer, Product Lead. What ties it all together? I build things that work, lead teams that trust each other, and ship without the drama.</p>
+          <p>I've worn many hats — Lead Game Designer, UX/UI Designer, Producer, Product Lead.</p>
           <!--/CMS:ABOUT_TEXT-->
           <!--CMS:EXTRA_BIO-->
-          <p>I also founded <strong>Kolektif untuk Gamedev Indonesia</strong>, a community for Indonesian game developers. Outside the studio? I write on <a href="https://medium.com/@aflacha" target="_blank" style="color:#888;text-decoration:underline;text-decoration-color:#222;">Medium</a>.</p>
+          <p>Founded <strong>Kolektif untuk Gamedev Indonesia</strong>. Dicoding Community Driver Award (2017). <a href="https://medium.com/@aflacha" target="_blank">medium.com/@aflacha</a></p>
           <!--/CMS:EXTRA_BIO-->
         </div>
-        <div>
-          <!--CMS:ABOUT_STATS-->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
-            <div style="padding:0.75rem;border-radius:6px;background:rgba(255,255,255,0.01);border:1px solid #141414;">
-              <div style="font-size:1.5rem;font-weight:700;color:#e0e0e0;">10+</div>
-              <div style="font-size:0.75rem;color:#444;">Years in games</div>
-            </div>
-            <div style="padding:0.75rem;border-radius:6px;background:rgba(255,255,255,0.01);border:1px solid #141414;">
-              <div style="font-size:1.5rem;font-weight:700;color:#e0e0e0;">1</div>
-              <div style="font-size:0.75rem;color:#444;">Studio co-founded</div>
-            </div>
-            <div style="padding:0.75rem;border-radius:6px;background:rgba(255,255,255,0.01);border:1px solid #141414;">
-              <div style="font-size:1.5rem;font-weight:700;color:#e0e0e0;">1</div>
-              <div style="font-size:0.75rem;color:#444;">Community founded</div>
-            </div>
-            <div style="padding:0.75rem;border-radius:6px;background:rgba(255,255,255,0.01);border:1px solid #141414;">
-              <div style="font-size:1.5rem;font-weight:700;color:#e0e0e0;">2017</div>
-              <div style="font-size:0.75rem;color:#444;">Community Award</div>
-            </div>
-          </div>
-          <!--/CMS:ABOUT_STATS-->
+        <!--CMS:ABOUT_STATS-->
+        <div class="term-stats">
+          <div class="term-stat"><div class="n">10+</div><div class="l">years in games &amp; tech</div></div>
+          <div class="term-stat"><div class="n">1</div><div class="l">co-founded studio</div></div>
+          <div class="term-stat"><div class="n">1</div><div class="l">community founded</div></div>
+          <div class="term-stat"><div class="n">2017</div><div class="l">dicoding award</div></div>
         </div>
+        <!--/CMS:ABOUT_STATS-->
       </div>
     </div>
   </section>
 
-  <!-- Services Scene -->
-  <section id="services" class="scene-section">
-    <div class="scene-inner">
-      <div class="scene-label">02 — What I Do</div>
-      <!--CMS:SERVICES_HEADER-->
-      <h2>Building games, products, and <strong>teams that deliver</strong>.</h2>
-      <!--/CMS:SERVICES_HEADER-->
-      <div class="scene-grid">
-        <!--CMS:SERVICES_CARDS-->
-        <div class="scene-card">
-          <div class="icon">🎲</div>
-          <h3>Game Design</h3>
-          <p>Mechanics, systems, narrative, player experience — from concept to launch.</p>
+  <!-- Timeline -->
+  <section id="timeline" class="term-section">
+    <div class="term-wrap">
+      <div class="term-header">
+        <span class="line-num">02</span>
+        <h2><span class="fn">career_log</span><span class="paren">()</span></h2>
+      </div>
+      <p class="term-intro">Each milestone added new skills — all still active today.</p>
+
+      <div class="timeline-code">
+        <div class="tl-line">
+          <div class="tl-year">2025</div>
+          <div class="tl-info">
+            <div class="tl-role">COO &amp; Co-founder</div>
+            <div class="tl-company">Artelysium Studios</div>
+            <div class="tl-desc">Leading operations, production pipelines, and team strategy.</div>
+            <div class="tl-skills"><span class="tl-skill">leadership</span><span class="tl-skill">strategy</span></div>
+          </div>
         </div>
-        <div class="scene-card">
+        <div class="tl-line">
+          <div class="tl-year">2020</div>
+          <div class="tl-info">
+            <div class="tl-role">Lead Game Designer</div>
+            <div class="tl-company">Artelysium Studios</div>
+            <div class="tl-desc">Systems design, UX/UI, player experience, team mentoring.</div>
+            <div class="tl-skills"><span class="tl-skill">production</span><span class="tl-skill">product_lead</span></div>
+          </div>
+        </div>
+        <div class="tl-line">
+          <div class="tl-year">2015</div>
+          <div class="tl-info">
+            <div class="tl-role">Game Designer</div>
+            <div class="tl-company">Found my calling</div>
+            <div class="tl-desc">Transitioned from web dev &amp; PM into game design. Founded Kolektif.</div>
+            <div class="tl-skills"><span class="tl-skill">game_design</span><span class="tl-skill">ux_ui</span><span class="tl-skill">community</span></div>
+          </div>
+        </div>
+        <div class="tl-line">
+          <div class="tl-year">2013</div>
+          <div class="tl-info">
+            <div class="tl-role">Web Front-End Developer</div>
+            <div class="tl-company">Where it all began</div>
+            <div class="tl-desc">Built the foundation in UX, code, and project management.</div>
+            <div class="tl-skills"><span class="tl-skill">frontend</span><span class="tl-skill">project_mgmt</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-today">
+        <strong>$</strong> active_skills: Game Design · UX/UI · Production · PM · Product Lead · Leadership · Front-End
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="term-section" style="background:var(--bg-alt)">
+    <div class="term-wrap">
+      <div class="term-header">
+        <span class="line-num">03</span>
+        <h2><span class="fn">services</span><span class="paren">()</span></h2>
+      </div>
+      <div class="services-grid">
+        <!--CMS:SERVICES_CARDS-->
+        <div class="service-card">
+          <div class="icon">🎲</div>
+          <h3>game_design</h3>
+          <p>Mechanics, systems, narrative, player experience — concept to launch.</p>
+        </div>
+        <div class="service-card">
           <div class="icon">🎨</div>
-          <h3>UX/UI Design</h3>
+          <h3>ux_ui_design</h3>
           <p>Wireframes, prototypes, interaction design for games and digital products.</p>
         </div>
-        <div class="scene-card">
+        <div class="service-card">
           <div class="icon">🎬</div>
-          <h3>Production</h3>
-          <p>Pipelines, milestones, team coordination — shipping on time without burnout.</p>
+          <h3>production</h3>
+          <p>Pipelines, milestones, team coordination — shipping without burnout.</p>
         </div>
-        <div class="scene-card">
+        <div class="service-card">
           <div class="icon">📋</div>
-          <h3>Project Management</h3>
+          <h3>project_mgmt</h3>
           <p>Agile, roadmaps, risk management, cross-disciplinary alignment.</p>
         </div>
         <!--/CMS:SERVICES_CARDS-->
@@ -460,102 +625,132 @@
     </div>
   </section>
 
-  <!-- Portfolio Scene -->
-  <section id="portfolio" class="scene-section" style="background:var(--bg-alt);">
-    <div class="scene-inner">
-      <div class="scene-label">03 — Portfolio</div>
-      <!--CMS:PORTFOLIO_HEADER-->
-      <h2>Selected work &amp; <strong>projects</strong>.</h2>
-      <!--/CMS:PORTFOLIO_HEADER-->
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:#0e0e0e;">
+  <!-- Portfolio -->
+  <section id="portfolio" class="term-section">
+    <div class="term-wrap">
+      <div class="term-header">
+        <span class="line-num">04</span>
+        <h2><span class="fn">portfolio</span><span class="paren">()</span></h2>
+      </div>
+      <div class="portfolio-ls">
         <!--CMS:PORTFOLIO_CARDS-->
-        <div style="background:#080808;padding:1.5rem;">
-          <div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0d0d0d,#070707);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:1rem;border:1px solid #141414;filter:grayscale(100%);">🎮</div>
-          <span style="font-size:0.65rem;color:#555;font-family:'JetBrains Mono',monospace;">game</span>
-          <h3 style="font-size:1rem;font-weight:500;margin:0.25rem 0 0.3rem;color:#d0d0d0;">Artelysium Title</h3>
-          <p style="font-size:0.8rem;color:#555;">Lead game design, production, and team coordination.</p>
+        <div class="portfolio-item">
+          <div class="file-info"><span class="perm">-rwxr-xr-x</span> <span class="size">2.1MB</span></div>
+          <span class="tag">game</span>
+          <h3>Artelysium Title</h3>
+          <p>Lead game design, production, and team coordination for an upcoming title.</p>
         </div>
-        <div style="background:#080808;padding:1.5rem;">
-          <div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0d0d0d,#070707);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:1rem;border:1px solid #141414;filter:grayscale(100%);">🎨</div>
-          <span style="font-size:0.65rem;color:#555;font-family:'JetBrains Mono',monospace;">ux-ui</span>
-          <h3 style="font-size:1rem;font-weight:500;margin:0.25rem 0 0.3rem;color:#d0d0d0;">Dashboard Redesign</h3>
-          <p style="font-size:0.8rem;color:#555;">Simplified IA improving retention for a game analytics dashboard.</p>
+        <div class="portfolio-item">
+          <div class="file-info"><span class="perm">-rwxr-xr-x</span> <span class="size">1.7MB</span></div>
+          <span class="tag">ux_ui</span>
+          <h3>Dashboard Redesign</h3>
+          <p>Redesigned player-facing analytics dashboard improving retention.</p>
         </div>
-        <div style="background:#080808;padding:1.5rem;">
-          <div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0d0d0d,#070707);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:1rem;border:1px solid #141414;filter:grayscale(100%);">🛠️</div>
-          <span style="font-size:0.65rem;color:#555;font-family:'JetBrains Mono',monospace;">production</span>
-          <h3 style="font-size:1rem;font-weight:500;margin:0.25rem 0 0.3rem;color:#d0d0d0;">Community Platform</h3>
-          <p style="font-size:0.8rem;color:#555;">Produced Kolektif untuk Gamedev Indonesia.</p>
+        <div class="portfolio-item">
+          <div class="file-info"><span class="perm">-rwxr-xr-x</span> <span class="size">3.4MB</span></div>
+          <span class="tag">production</span>
+          <h3>Community Platform</h3>
+          <p>Produced Kolektif untuk Gamedev Indonesia.</p>
         </div>
         <!--/CMS:PORTFOLIO_CARDS-->
       </div>
     </div>
   </section>
 
-  <!-- Writing Scene -->
-  <section id="writing" class="scene-section">
-    <div class="scene-inner">
-      <div class="scene-label">04 — Writing</div>
-      <!--CMS:WRITING_HEADER-->
-      <h2>Thoughts on games, design, and <strong>the industry</strong>.</h2>
-      <!--/CMS:WRITING_HEADER-->
-      <div class="scene-writing">
+  <!-- Writing -->
+  <section id="writing" class="term-section" style="background:var(--bg-alt)">
+    <div class="term-wrap">
+      <div class="term-header">
+        <span class="line-num">05</span>
+        <h2><span class="fn">writing</span><span class="paren">()</span></h2>
+      </div>
+      <div class="writing-symbolic">
         <!--CMS:WRITING_CARD-->
         <a href="https://medium.com/@aflacha" target="_blank" rel="noopener">
-          <span>→</span> Read my latest on Medium
+          <span class="ln">ln -s</span> /medium/@aflacha → external
         </a>
         <!--/CMS:WRITING_CARD-->
       </div>
     </div>
   </section>
 
-  <!-- Contact Scene -->
-  <section id="contact" class="scene-section" style="background:var(--bg-alt);">
-    <div class="scene-inner">
-      <div class="scene-label">05 — Contact</div>
-      <!--CMS:CONTACT_HEADER-->
-      <h2>Let's <strong>work together</strong>.</h2>
-      <!--/CMS:CONTACT_HEADER-->
-      <!--CMS:CONTACT_INTRO-->
-      <p style="color:#555;margin-bottom:1.5rem;font-size:0.9rem;">Whether you have a project, want to talk games, or just say hi — I'm always open.</p>
-      <!--/CMS:CONTACT_INTRO-->
-      <div class="contact-inline">
-        <!--CMS:CONTACT_EMAIL-->
-        <a href="mailto:aflacha@artelysium.com">✉ aflacha@artelysium.com</a>
-        <!--/CMS:CONTACT_EMAIL-->
-        <!--CMS:CONTACT_LINKS-->
-        <a href="https://linkedin.com/in/aflacha" target="_blank" rel="noopener">in linkedin</a>
-        <a href="https://github.com/aflacha" target="_blank" rel="noopener">gh github</a>
-        <a href="https://medium.com/@aflacha" target="_blank" rel="noopener">md medium</a>
-        <!--/CMS:CONTACT_LINKS-->
+  <!-- Contact -->
+  <section id="contact" class="term-section">
+    <div class="term-wrap">
+      <div class="term-header">
+        <span class="line-num">06</span>
+        <h2><span class="fn">contact</span><span class="paren">()</span></h2>
+      </div>
+      <div class="contact-block">
+        <div class="contact-links">
+          <!--CMS:CONTACT_EMAIL-->
+          <a href="mailto:aflacha@artelysium.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            aflacha@artelysium.com
+          </a>
+          <!--/CMS:CONTACT_EMAIL-->
+          <!--CMS:CONTACT_LINKS-->
+          <a href="https://linkedin.com/in/aflacha" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            linkedin.com/in/aflacha
+          </a>
+          <a href="https://github.com/aflacha" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            github.com/aflacha
+          </a>
+          <a href="https://medium.com/@aflacha" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 0v24h24V0H0zm19.938 5.686L18.651 6.92a.376.376 0 00-.143.362v9.067a.376.376 0 00.143.361l1.257 1.234v.271h-6.322v-.271l1.302-1.265c.128-.128.128-.165.128-.36V8.99l-3.62 9.195h-.49L6.69 8.99v6.163a.85.85 0 00.233.707l1.694 2.054v.271H3.815v-.271l1.694-2.054a.82.82 0 00.218-.707V8.072a.624.624 0 00-.203-.528L4.019 5.686v-.27h4.674l3.613 7.923 3.176-7.924h4.456v.271z"/></svg>
+            medium.com/@aflacha
+          </a>
+          <!--/CMS:CONTACT_LINKS-->
+        </div>
+        <div>
+          <form class="term-form" id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+            <input type="text" name="name" placeholder="$ your_name" required>
+            <input type="email" name="email" placeholder="$ your_email" required>
+            <textarea name="message" placeholder="$ message" required></textarea>
+            <button class="btn btn-outline" type="submit">$ send &gt;</button>
+            <div class="term-form-success" id="form-success">✓ sent — exit code 0</div>
+          </form>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
-    <p>
-      <!--CMS:FOOTER_YEAR-->2026<!--/CMS:FOOTER_YEAR--> &middot; 
-      <a href="https://aflacha.com"><!--CMS:FOOTER_NAME-->Aflacha Rachmata<!--/CMS:FOOTER_NAME--></a> &middot; 
-      <!--CMS:FOOTER_TEXT-->$ echo "built with black and white"<!--/CMS:FOOTER_TEXT-->
-    </p>
+    <p>&copy; <!--CMS:FOOTER_YEAR-->2026<!--/CMS:FOOTER_YEAR--> · <a href="https://aflacha.com"><!--CMS:FOOTER_NAME-->Aflacha Rachmata<!--/CMS:FOOTER_NAME--></a> · <!--CMS:FOOTER_TEXT-->exit 0<!--/CMS:FOOTER_TEXT--></p>
   </footer>
+
+  <!-- Hidden CMS markers -->
+  <div style="display:none">
+    <!--CMS:HERO_BADGE-->Available<!--/CMS:HERO_BADGE-->
+    <!--CMS:ABOUT_HEADER--><!--/CMS:ABOUT_HEADER-->
+    <!--CMS:SERVICES_HEADER--><!--/CMS:SERVICES_HEADER-->
+    <!--CMS:PORTFOLIO_HEADER--><!--/CMS:PORTFOLIO_HEADER-->
+    <!--CMS:WRITING_HEADER--><!--/CMS:WRITING_HEADER-->
+    <!--CMS:CONTACT_HEADER--><!--/CMS:CONTACT_HEADER-->
+    <!--CMS:CONTACT_INTRO--><!--/CMS:CONTACT_INTRO-->
+  </div>
 
   <a href="/admin/" class="admin-link" title="CMS" target="_blank" rel="noopener">⚙</a>
 
   <script>
-    document.getElementById('nav-toggle')?.addEventListener('click', () => {
-      document.getElementById('nav-links')?.classList.toggle('open');
+    document.getElementById('nav-toggle')?.addEventListener('click',()=>{
+      document.getElementById('nav-links')?.classList.toggle('open')
+    });
+    const form=document.getElementById('contact-form'),s=document.getElementById('form-success');
+    form?.addEventListener('submit',function(e){
+      e.preventDefault();
+      form.querySelectorAll('input,textarea,button').forEach(el=>el.style.display='none');
+      s.style.display='block'
     });
   </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', function(user) {
-        if (!user && window.location.hash.includes('invite_token')) {
-          window.netlifyIdentity.on('login', function() {
-            window.location.href = '/admin/';
-          });
+    if(window.netlifyIdentity){
+      window.netlifyIdentity.on('init',function(user){
+        if(!user&&window.location.hash.includes('invite_token')){
+          window.netlifyIdentity.on('login',function(){window.location.href='/admin/'})
         }
       });
     }
