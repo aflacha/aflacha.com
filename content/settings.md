@@ -1,4 +1,4 @@
 ---
 under_construction: false
-template_choice: storyboard
+template_choice: dashboard
 ---
