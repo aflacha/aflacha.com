@@ -332,6 +332,12 @@ def generate_contact_email_html(email):
 
 # ── Main Build Logic ──────────────────────────────────────────────
 
+TEMPLATE_MAP = {
+    'storyboard': 'template-storyboard.html',
+    'dashboard': 'template-dashboard.html',
+    'terminal': 'template-terminal.html',
+}
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'template.html')
 CONSTRUCTION_TEMPLATE_PATH = os.path.join(BASE_DIR, 'template-construction.html')
@@ -562,9 +568,15 @@ def build():
         print(f"    Portfolio: {len(portfolio_data.get('projects', []))} items")
         print(f"    Contact: {len(contact)} fields")
 
+        # 2. Determine template choice
+        template_choice = settings.get('template_choice', 'storyboard')
+        template_filename = TEMPLATE_MAP.get(template_choice, 'template-storyboard.html')
+        template_path = os.path.join(BASE_DIR, template_filename)
+        print(f"    Template: {template_filename} ({template_choice})")
+
         # 2. Read template
         print("  Reading template...")
-        with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
+        with open(template_path, 'r', encoding='utf-8') as f:
             html = f.read()
 
         # 3. Generate replacements

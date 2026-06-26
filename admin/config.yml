@@ -20,6 +20,15 @@ collections:
             widget: "boolean"
             default: false
             hint: "Toggle ON to show Coming Soon page. Toggle OFF to show full portfolio."
+          - label: "Template"
+            name: "template_choice"
+            widget: "select"
+            options:
+              - { label: "🧩 Storyboard (Timeline)", value: "storyboard" }
+              - { label: "🎮 Dashboard (Grid)", value: "dashboard" }
+              - { label: "⬛ Terminal (Editorial)", value: "terminal" }
+            default: "storyboard"
+            hint: "Which template design to use for the portfolio."
 
       - name: "site_content"
         label: "Site Content (Global)"
