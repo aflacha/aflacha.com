@@ -32,7 +32,7 @@
       --sans:'Inter',-apple-system,sans-serif
     }
 
-    html{font-size:16px;scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    html{overflow-x:hidden}html{font-size:16px;scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
     body{
       font-family:var(--sans);
       background:var(--bg);
@@ -202,7 +202,7 @@
       position:relative
     }
     .scene-panel:last-of-type{border-bottom:2px solid var(--ink)}
-    .scene-panel.scene-alt{background:var(--bg-alt);margin:0 -9999px;padding:4rem 9999px}
+    .scene-panel.scene-alt{position:relative;background:transparent}.scene-panel.scene-alt::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;background:var(--bg-alt);z-index:-1}
 
     .scene-label{
       font-size:0.7rem;
