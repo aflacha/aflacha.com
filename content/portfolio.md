@@ -1,15 +1,21 @@
 ---
 projects:
-  - icon: "🎮"
-    title: "Artelysium Studio Title"
-    tag: "Game"
-    description: "Lead game design, production, and team coordination for an upcoming title."
-  - icon: "🎨"
-    title: "Game Dashboard Redesign"
-    tag: "UX/UI"
-    description: "Redesigned player-facing analytics dashboard improving retention by simplifying information architecture."
-  - icon: "🛠️"
-    title: "Community Platform"
-    tag: "Production"
-    description: "Produced Kolektif untuk Gamedev Indonesia — a growing community platform for Indonesian game developers."
+  - icon: 🎮
+    title: Artelysium Studio Title
+    tag: Game
+    description: Lead game design, production, and team coordination for an upcoming title.
+  - icon: 🎨
+    title: Game Dashboard Redesign
+    tag: UX/UI
+    description: Redesigned player-facing analytics dashboard improving retention by
+      simplifying information architecture.
+  - icon: 🛠️
+    title: Community Platform
+    tag: Production
+    description: Produced Kolektif untuk Gamedev Indonesia — a growing community
+      platform for Indonesian game developers.
+  - icon: N
+    title: New Project
+    tag: project
+    description: New project description here.
 ---
