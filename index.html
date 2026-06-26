@@ -8,13 +8,12 @@
   <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     /* ═══════════════════════════════════════════════
        MONOCHROME DESIGN TOKENS
-       Black & white. Grey only where necessary.
        ═══════════════════════════════════════════════ */
     :root {
       --bg: #050505;
@@ -31,6 +30,9 @@
       --accent-subtle: rgba(255, 255, 255, 0.06);
       --gradient: linear-gradient(135deg, #e0e0e0, #ffffff);
       --max-width: 1350px;
+      --timeline-line: #1a1a1a;
+      --timeline-dot: #222;
+      --timeline-dot-active: #fff;
     }
 
     html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
@@ -40,6 +42,7 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
+      overflow-x: hidden;
     }
 
     /* ══ Navigation ══ */
@@ -138,8 +141,7 @@
     }
 
     /* ═══════════════════════════════════════════════
-       HERO — DIAGONAL SPLIT (Option A)
-       Photo bleeds from the right with a diagonal clip.
+       HERO — DIAGONAL SPLIT
        ═══════════════════════════════════════════════ */
     #hero {
       min-height: calc(100vh - 64px);
@@ -163,7 +165,6 @@
       position: relative;
     }
 
-    /* Photo — clipped diagonally */
     .hero-photo {
       position: relative;
       height: 100%;
@@ -190,20 +191,6 @@
       object-position: 50% 25%;
       filter: grayscale(100%) contrast(1.1);
       display: block;
-    }
-
-    /* Diagonal accent line */
-    .hero-accent-line {
-      position: absolute;
-      top: 0;
-      left: 40%;
-      width: 2px;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      transform: skewX(-15deg);
-      z-index: 1;
-      pointer-events: none;
-      display: none; /* visual flair — hidden on mobile */
     }
 
     .hero-text {
@@ -249,9 +236,7 @@
       text-align: left;
     }
 
-    .hero-name .highlight {
-      color: #fff;
-    }
+    .hero-name .highlight { color: #fff; }
 
     .hero-tagline {
       font-size: 1.1rem;
@@ -348,8 +333,6 @@
       .hero-photo::before {
         background: linear-gradient(180deg, rgba(5, 5, 5, 0.1) 0%, rgba(5, 5, 5, 0.5) 70%, rgba(5, 5, 5, 0.95) 100%);
       }
-
-      .hero-accent-line { display: none; }
     }
 
     /* ══ About ══ */
@@ -386,6 +369,280 @@
 
     @media (max-width: 768px) {
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       CAREER TIMELINE — Skill Tree / Progression
+       Shows growth layers, not expired skills.
+       All skills are still active today.
+       ═══════════════════════════════════════════════ */
+    #timeline {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(180deg, transparent, var(--timeline-line) 10%, var(--timeline-line) 90%, transparent);
+      z-index: 0;
+      transform: translateX(-50%);
+    }
+
+    .timeline-subtitle {
+      text-align: center;
+      color: #555;
+      font-size: 0.9rem;
+      margin-top: -2.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .timeline-nodes {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-node {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    /* Left side — year + skills accumulated */
+    .timeline-node-left {
+      text-align: right;
+      padding: 1.5rem 0;
+    }
+
+    .timeline-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #222;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s;
+    }
+
+    .timeline-node:hover .timeline-year {
+      color: #fff;
+    }
+
+    .timeline-year-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #555;
+      margin-bottom: 0.75rem;
+    }
+
+    .timeline-skills-gained {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      justify-content: flex-end;
+    }
+
+    .timeline-skill-tag {
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid #1e1e1e;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .timeline-node:hover .timeline-skill-tag {
+      border-color: #2a2a2a;
+      color: #999;
+    }
+
+    /* Center — dot connector */
+    .timeline-node-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 1rem 0;
+    }
+
+    .timeline-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--timeline-dot);
+      border: 2px solid #2a2a2a;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s;
+    }
+
+    .timeline-dot.active {
+      background: #fff;
+      border-color: #fff;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+    }
+
+    .timeline-node:hover .timeline-dot:not(.active) {
+      background: #444;
+      border-color: #555;
+    }
+
+    /* Right side — card */
+    .timeline-node-right {
+      padding: 1.5rem 0;
+    }
+
+    .timeline-card {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .timeline-node:hover .timeline-card {
+      border-color: #2e2e2e;
+      transform: translateX(4px);
+    }
+
+    .timeline-role {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-company {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.8rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* Today indicator */
+    .timeline-today {
+      text-align: center;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-today-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.2rem;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid #1e1e1e;
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .timeline-today-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fff;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    /* Skill accumulation bar at top of timeline */
+    .timeline-all-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid #181818;
+    }
+
+    .timeline-all-skills-label {
+      width: 100%;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-all-skill {
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid #222;
+      font-size: 0.8rem;
+      color: #aaa;
+      font-weight: 500;
+    }
+
+    @media (max-width: 900px) {
+      #timeline::before { left: 24px; }
+      
+      .timeline-node {
+        grid-template-columns: 28px 1fr;
+        gap: 0 1rem;
+      }
+
+      .timeline-node-left {
+        display: contents;
+      }
+
+      .timeline-year {
+        font-size: 1.2rem;
+        position: absolute;
+        left: 44px;
+        top: -0.5rem;
+      }
+
+      .timeline-year-label { display: none; }
+      .timeline-skills-gained { display: none; }
+
+      .timeline-node-center {
+        grid-column: 1;
+        padding: 0;
+        justify-content: flex-start;
+      }
+
+      .timeline-dot {
+        width: 12px;
+        height: 12px;
+      }
+
+      .timeline-node-right {
+        grid-column: 2;
+        padding: 0.5rem 0;
+      }
+
+      .timeline-card {
+        padding: 1rem 1.25rem;
+        border-color: #1a1a1a;
+      }
+
+      .timeline-node:hover .timeline-card {
+        transform: translateX(2px);
+      }
+
+      .timeline-all-skills { display: none; }
     }
 
     /* ══ What I Do ══ */
@@ -705,7 +962,6 @@
         <img src="/images/val-pool-night.jpg" alt="Aflacha Rachmata — portfolio photo" loading="eager">
       </div>
     </div>
-    <div class="hero-accent-line"></div>
   </section>
 
   <!-- About -->
@@ -750,6 +1006,127 @@ to the local dev ecosystem.
             <div class="number">2017</div>
             <div class="label">Dicoding Community Driver Award</div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Career Timeline — Skill Tree / Progression -->
+  <section id="timeline">
+    <div class="section-inner fade-in">
+      <div class="section-label">Career Timeline</div>
+      <h2 class="section-title">The layers I've built.</h2>
+      <p class="timeline-subtitle">Each milestone added new skills — and I still use all of them today.</p>
+
+      <!-- All active skills banner -->
+      <div class="timeline-all-skills">
+        <div class="timeline-all-skills-label">All active skills</div>
+        <span class="timeline-all-skill">🎲 Game Design</span>
+        <span class="timeline-all-skill">🎨 UX/UI Design</span>
+        <span class="timeline-all-skill">🎬 Production</span>
+        <span class="timeline-all-skill">📋 Project Management</span>
+        <span class="timeline-all-skill">🧠 Product Lead</span>
+        <span class="timeline-all-skill">👥 Leadership</span>
+        <span class="timeline-all-skill">🔧 Front-End Dev</span>
+      </div>
+
+      <div class="timeline-nodes">
+
+        <!-- Node 2025 -->
+        <div class="timeline-node">
+          <div class="timeline-node-left">
+            <div class="timeline-year">2025</div>
+            <div class="timeline-year-label">Present</div>
+            <div class="timeline-skills-gained">
+              <span class="timeline-skill-tag">+Leadership</span>
+              <span class="timeline-skill-tag">+Strategy</span>
+            </div>
+          </div>
+          <div class="timeline-node-center">
+            <div class="timeline-dot active"></div>
+          </div>
+          <div class="timeline-node-right">
+            <div class="timeline-card">
+              <div class="timeline-role">COO &amp; Co-founder</div>
+              <div class="timeline-company">Artelysium Studios</div>
+              <div class="timeline-desc">Leading operations, production pipelines, and team strategy. Building games, comics, and illustrations at scale.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node 2020 -->
+        <div class="timeline-node">
+          <div class="timeline-node-left">
+            <div class="timeline-year">2020</div>
+            <div class="timeline-year-label">→ Present</div>
+            <div class="timeline-skills-gained">
+              <span class="timeline-skill-tag">+Production</span>
+              <span class="timeline-skill-tag">+Product Lead</span>
+            </div>
+          </div>
+          <div class="timeline-node-center">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-node-right">
+            <div class="timeline-card">
+              <div class="timeline-role">Lead Game Designer</div>
+              <div class="timeline-company">Artelysium Studios</div>
+              <div class="timeline-desc">Led game design across multiple titles. Systems design, UX/UI, player experience, and team mentoring.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node 2015 -->
+        <div class="timeline-node">
+          <div class="timeline-node-left">
+            <div class="timeline-year">2015</div>
+            <div class="timeline-year-label">→ Present</div>
+            <div class="timeline-skills-gained">
+              <span class="timeline-skill-tag">+Game Design</span>
+              <span class="timeline-skill-tag">+UX/UI Design</span>
+              <span class="timeline-skill-tag">+Community</span>
+            </div>
+          </div>
+          <div class="timeline-node-center">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-node-right">
+            <div class="timeline-card">
+              <div class="timeline-role">Game Designer</div>
+              <div class="timeline-company">Found my calling</div>
+              <div class="timeline-desc">Transitioned from web dev &amp; PM into game design. Founded Kolektif untuk Gamedev Indonesia.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node 2013 -->
+        <div class="timeline-node">
+          <div class="timeline-node-left">
+            <div class="timeline-year">2013</div>
+            <div class="timeline-year-label">→ Present</div>
+            <div class="timeline-skills-gained">
+              <span class="timeline-skill-tag">+Front-End Dev</span>
+              <span class="timeline-skill-tag">+Project Management</span>
+            </div>
+          </div>
+          <div class="timeline-node-center">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-node-right">
+            <div class="timeline-card">
+              <div class="timeline-role">Web Front-End Developer</div>
+              <div class="timeline-company">Where it all began</div>
+              <div class="timeline-desc">Started career as a front-end developer. Built the foundation in UX, code, and project management that still serve me today.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Today anchor -->
+      <div class="timeline-today">
+        <div class="timeline-today-badge">
+          <span class="dot"></span> Still using every skill I've gained
         </div>
       </div>
     </div>
@@ -889,7 +1266,6 @@ to the local dev ecosystem.
   <a href="/admin/" class="admin-link" title="CMS" target="_blank" rel="noopener">⚙</a>
 
   <script>
-    // Mobile nav toggle
     const toggle = document.getElementById('nav-toggle');
     const navLinks = document.getElementById('nav-links');
 
@@ -897,14 +1273,12 @@ to the local dev ecosystem.
       navLinks.classList.toggle('open');
     });
 
-    // Close nav on link click
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');
       });
     });
 
-    // Scroll reveal animation
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -915,7 +1289,6 @@ to the local dev ecosystem.
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Contact form placeholder
     const form = document.getElementById('contact-form');
     const successMsg = document.getElementById('form-success');
 
@@ -928,7 +1301,6 @@ to the local dev ecosystem.
       successMsg.style.display = 'block';
     });
   </script>
-  <!-- Netlify Identity (for CMS invite acceptance only) -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     if (window.netlifyIdentity) {
