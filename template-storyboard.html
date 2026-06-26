@@ -75,6 +75,11 @@
     }
     .nav-links a:hover{color:var(--text)}
     .nav-mobile-toggle{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:4px}
+
+    @media(max-width:640px){
+      .scene-title,.section-title{font-size:1.3rem}
+    }
+
     .nav-mobile-toggle span{display:block;width:22px;height:1.5px;background:var(--text-muted);border-radius:1px}
 
     /* ══ Hero — diagonal split (paper palette) ══ */
@@ -219,6 +224,28 @@
       line-height:1.2;
       margin-bottom:0.75rem
     }
+
+    .section-label{
+      font-size:0.7rem;
+      font-weight:600;
+      letter-spacing:0.15em;
+      text-transform:uppercase;
+      color:var(--text-dim);
+      margin-bottom:0.5rem
+    }
+    .section-title{
+      font-family:var(--serif);
+      font-size:1.8rem;
+      font-weight:700;
+      line-height:1.2;
+      margin-bottom:0.75rem
+    }
+    .section-intro{
+      color:var(--text-muted);
+      font-size:0.9rem;
+      margin-bottom:2rem;
+      max-width:600px
+    }
     .scene-intro{
       color:var(--text-muted);
       font-size:0.9rem;
@@ -227,6 +254,7 @@
     }
 
     /* ══ About — 2 column ══ */
+    @media(max-width:640px){.about-grid{margin-left:0}}
     .about-grid{
       display:grid;
       grid-template-columns:1.3fr 1fr;
@@ -471,22 +499,28 @@
     .admin-link:hover{opacity:1;border-color:var(--ink);color:var(--text)}
 
     /* ══ Mobile ══ */
-    @media(max-width:800px){
-      .hero-layout{grid-template-columns:1fr;gap:2rem}
-      .hero-text-col h1{font-size:2.4rem}
-      .hero-photo-col .photo-wrap{max-width:300px}
-      .about-grid{grid-template-columns:1fr;gap:2rem}
-      .timeline-block{grid-template-columns:1fr;gap:0.5rem}
+    @media(max-width:900px){
+      .hero-inner{grid-template-columns:1fr;gap:0;min-height:auto;padding:0}
+      .hero-text{padding:2.5rem 1.5rem;text-align:center}
+      .hero-text h1,.hero-tagline,.hero-cta,.hero-tags{text-align:center;justify-content:center;margin-left:auto;margin-right:auto}
+      .hero-text h1{font-size:2.4rem}
+      .hero-photo{min-height:45vh;clip-path:polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%);order:-1}
+      .hero-photo::before{background:linear-gradient(180deg, rgba(250,247,242,0.1), rgba(250,247,242,0.5) 70%, rgba(250,247,242,0.95))}
+      .hero-scene-label{right:0.5rem}
+      .scene-title,.section-title{font-size:1.5rem}
+      .about-grid,.timeline-block{grid-template-columns:1fr;gap:2rem}
+      .about-grid{gap:1.5rem}
       .timeline-block::before{display:none}
       .tl-year{font-size:0.8rem;padding-top:0}
       .tl-content{padding-left:0}
       .tl-dot{display:none}
-      .services-grid{grid-template-columns:1fr}
-      .portfolio-grid{grid-template-columns:1fr}
+      .services-grid,.portfolio-grid{grid-template-columns:1fr}
       .portfolio-card.span-2{grid-column:span 1}
       .contact-layout{grid-template-columns:1fr;gap:2rem}
     }
     @media(max-width:640px){
+      .scene-title,.section-title{font-size:1.3rem}
+      .hero-text h1{font-size:1.8rem}
       .nav-links{
         display:none;position:absolute;top:4.5rem;left:0;right:0;
         flex-direction:column;gap:0;
@@ -497,8 +531,7 @@
       .nav-links a{padding:0.6rem 1.5rem}
       .nav-mobile-toggle{display:flex}
       nav{position:relative}
-    }
-  </style>
+    }  </style>
 </head>
 <body>
 
@@ -562,7 +595,7 @@
   <!-- SCENE 2: About -->
   <section id="about" class="scene-panel scene-alt">
     <div class="storyboard-frame fade-in">
-      <div class="scene-label"><!--CMS:ABOUT_HEADER-->About<!--/CMS:ABOUT_HEADER--></div>
+      <!--CMS:ABOUT_HEADER-->About<!--/CMS:ABOUT_HEADER-->
       <div class="about-grid">
         <div class="about-text">
           <!--CMS:ABOUT_TEXT-->
@@ -680,8 +713,7 @@
   <!-- SCENE 4: What I Do -->
   <section id="services" class="scene-panel scene-alt">
     <div class="storyboard-frame fade-in">
-      <div class="scene-label"><!--CMS:SERVICES_HEADER-->What I Do<!--/CMS:SERVICES_HEADER--></div>
-      <h2 class="scene-title">Building games, products, and teams that deliver.</h2>
+      <!--CMS:SERVICES_HEADER-->What I Do<!--/CMS:SERVICES_HEADER-->
       <!--CMS:SERVICES_CARDS-->
       <div class="services-grid">
         <div class="service-card">
@@ -712,8 +744,7 @@
   <!-- SCENE 5: Portfolio -->
   <section id="portfolio" class="scene-panel">
     <div class="storyboard-frame fade-in">
-      <div class="scene-label"><!--CMS:PORTFOLIO_HEADER-->Portfolio<!--/CMS:PORTFOLIO_HEADER--></div>
-      <h2 class="scene-title">Selected work &amp; projects.</h2>
+      <!--CMS:PORTFOLIO_HEADER-->Portfolio<!--/CMS:PORTFOLIO_HEADER-->
       <!--CMS:PORTFOLIO_CARDS-->
       <div class="portfolio-grid">
         <div class="portfolio-card span-2">
@@ -748,8 +779,7 @@
   <!-- SCENE 6: Writing -->
   <section id="writing" class="scene-panel scene-alt">
     <div class="storyboard-frame fade-in">
-      <div class="scene-label"><!--CMS:WRITING_HEADER-->Writing<!--/CMS:WRITING_HEADER--></div>
-      <h2 class="scene-title">Thoughts on games, design, and the industry.</h2>
+      <!--CMS:WRITING_HEADER-->Writing<!--/CMS:WRITING_HEADER-->
       <div class="writing-list">
         <!--CMS:WRITING_CARD-->
         <a href="https://medium.com/@aflacha" target="_blank" rel="noopener" class="writing-card">
@@ -765,8 +795,7 @@
   <!-- SCENE 7: Contact -->
   <section id="contact" class="scene-panel">
     <div class="storyboard-frame fade-in">
-      <div class="scene-label"><!--CMS:CONTACT_HEADER-->Contact<!--/CMS:CONTACT_HEADER--></div>
-      <h2 class="scene-title">Let's work together.</h2>
+      <!--CMS:CONTACT_HEADER-->Contact<!--/CMS:CONTACT_HEADER-->
       <!--CMS:CONTACT_INTRO-->
       <p class="scene-intro">Whether you have a project in mind, want to talk games, or just say hi — I'm always open to a good conversation.</p>
       <!--/CMS:CONTACT_INTRO-->
